@@ -9,7 +9,7 @@ const hbs = require("hbs")
 const mongoose = require("mongoose")
 const logger = require("morgan")
 const path = require("path")
-const db = "BePossitive"
+const db = "BePositive"
 
 
 //init mongoose DB
@@ -22,6 +22,8 @@ mongoose
         console.error('Error connecting to mongo', err)
     });
 
+
+    const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -44,12 +46,11 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 app.locals.title ="Be Positive"
 
-const indexRouter = require (".routes/index")
-const authRouter = require(".routes/auth")
-const recordRouter = require(".router/records")
+const indexRouter = require ("./router/index.js")
+const authRouter = require("./router/auth.js")
+const recordRouter = require("./router/records.js")
 
 app.use('/',indexRouter);
 app.use('/auth',authRouter);
-app.use('records',recordRouter);
-
+app.use('/record',recordRouter);
 module.exports = app
