@@ -48,7 +48,7 @@ router.get('/signup', (req, res, next) => {
 
 //falta exportar els errors al frontend ara simplement pinta per terminal el error! pero volia saver com ho fem primer, si fem errors a cada input text o fem un general a sota/sobre
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
 	const {name, username, lastName, password, repeatPassword, email, profession, country} = req.body;
 	switch (true) {
 		case password === '':
@@ -73,38 +73,29 @@ router.post('/signup', (req, res, next) => {
 
 
 		default:
-			//TODO ASYNC AWAIT, TO AVOID CREATION OF USER IF DATA BASE HAS SOME DELAY
-			User.findOne({username: username})
-				.then(user => {
-					if (user !== null) {
-						console.log('el usuario ya existe');
-						res.render('auth/signup', {profession: arrayProfession, country: arrayCountries});
-						return;
+			try {
+				let user = await User.findOne({username});
+				if (user) {
+					res.render('auth/signup', {profession: arrayProfession, countries: arrayCountries});
+					return;
+				}
+				user = await User.findOne({email});
 
-					}
-				});
+				if (user) {
+					res.render('auth/signup', {profession: arrayProfession, countries: arrayCountries});
+					return;
+				}
 
-			User.findOne({email: email})
-				.then(user => {
-					if (user !== null) {
-						console.log('el email ya esta registrado');
-						res.render('auth/signup', {profession: arrayProfession, country: arrayCountries});
-						return;
-					}
-				});
+				const salt = bcrypt.genSaltSync(bcryptSalt);
+				const hashPass = bcrypt.hashSync(password, salt);
 
-			const salt = bcrypt.genSaltSync(bcryptSalt);
-			const hashPass = bcrypt.hashSync(password, salt);
-
-			User.create({username, name, lastName, password: hashPass, email, profession, country})
-				.then(userCreated => {
-					console.log(userCreated);
-					req.session.currentUser = userCreated;
-					res.render('auth/private', userCreated);
-				})
-				.catch(err => {
-					console.log(err)
-				})
+				user = await User.create({username, name, lastName, password: hashPass, email, profession, country});
+				req.session.currentUser = user;
+				res.render('auth/private', user);
+			} catch (e) {
+				console.error(e);
+				next(e);
+			}
 	}
 });
 
