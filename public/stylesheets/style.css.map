@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"file": "style.css",
+	"sources": [
+		"style.scss",
+		"landing.scss"
+	],
+	"names": [],
+	"mappings": "ACAA,AACE,aADW,CACX,GAAG,CAAC;EACF,KAAK,EAAE,IAAI,GACZ"
+}
