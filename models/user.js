@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    user: { type: String, require: true ,unique: true },
+    username: { type: String, require: true ,unique: true },
     name: String,
     secondName: String,
     password: { type: String,require},
-    birthday:  Date(),
+    birthday:  Date,
     profession: String,
     countrie: String,
     email: { type: String,require ,unique: true },

@@ -1,4 +1,5 @@
-const job = ['Chiropractor',
+const profession = ['IronHaker',
+'Chiropractor',
 'Dentist',
 'Dietitian or Nutritionist',
 'Optometrist',
@@ -72,4 +73,4 @@ const job = ['Chiropractor',
 'Not Applicable',
 ];
 
-module.exports = job
+module.exports = profession
