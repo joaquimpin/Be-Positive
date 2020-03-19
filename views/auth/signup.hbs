@@ -1,0 +1,19 @@
+<form id="form" action="/auth/signup" method="post">
+    <input type="text" name="username" required placeholder="Username" /><br>
+    <input type="text" name="name" required placeholder="Name" /><br>
+    <input type="text" name="lastname" required placeholder="Lastname" /><br>
+    <input type="email" name="email" required placeholder="E-mail" /><br>
+    <input type="password" name="password" required placeholder="********" /><br>
+    <input type="password" name="repeatpassword" required placeholder="********" /><br>
+    <select name="countrie"><br>
+        {{#each countrie}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+    <select name="profession">
+        {{#each profession}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select><br>
+    <button type="submit">Create account</button>
+</form>
