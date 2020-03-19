@@ -1,42 +1,42 @@
 //require's
 require('dotenv').config();
 
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const express = require("express")
-const favicon = require("serve-favicon")
-const hbs = require("hbs")
-const mongoose = require("mongoose")
-const logger = require("morgan")
-const path = require("path")
-const db = "BePositive"
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const express = require('express');
+const favicon = require('serve-favicon');
+const hbs = require('hbs');
+const mongoose = require('mongoose');
+const logger = require('morgan');
+const path = require('path');
+const db = 'BePositive';
 
 
 
 //init mongoose DB
 mongoose
-    .connect(`mongodb://localhost/${db}`, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(x => {
-        console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
-    })
-    .catch(err => {
-        console.error('Error connecting to mongo', err)
-    });
+	.connect(`mongodb://localhost/${db}`, {useNewUrlParser: true, useUnifiedTopology: true})
+	.then(x => {
+		console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+	})
+	.catch(err => {
+		console.error('Error connecting to mongo', err)
+	});
 
 
 const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 // Express View engine setup
 
 app.use(require('node-sass-middleware')({
-    src: path.join(__dirname, 'public'),
-    dest: path.join(__dirname, 'public'),
-    sourceMap: true
+	src: path.join(__dirname, 'public'),
+	dest: path.join(__dirname, 'public'),
+	sourceMap: true
 }));
 
 
@@ -45,13 +45,13 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-app.locals.title = "Be Positive"
+app.locals.title = 'Be Positive';
 
-const indexRouter = require("./router/index.js")
-const authRouter = require("./router/auth.js")
-const recordRouter = require("./router/records.js")
+const indexRouter = require('./router/index.js');
+const authRouter = require('./router/auth.js');
+const recordRouter = require('./router/records.js');
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/record', recordRouter);
-module.exports = app
+module.exports = app;
