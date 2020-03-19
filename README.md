@@ -29,7 +29,7 @@ you will have your heart and mind full of positive thoughts!!
 4. Publish a positive aspect of their day and share it with the rest of users. 
 5. See other user's publications.
 6. Thumbs up :thumbsup: other user's publications.
-7. Comment other user's publications
+
 
 
 
@@ -61,6 +61,7 @@ you will have your heart and mind full of positive thoughts!!
 
 - Send daily emails for remembering the user to write a positive thing :mailbox:
 - Choose your publications to be Public or Private 
+- Comment other user's publications
 
 
 
