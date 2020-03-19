@@ -1,4 +1,4 @@
-const countrie = [
+const countries = [
     "Afghanistan",
     "Albania",
     "Algeria",
@@ -241,4 +241,4 @@ const countrie = [
     "Zimbabwe",
 ];
 
-module.exports = countrie
+module.exports = countries

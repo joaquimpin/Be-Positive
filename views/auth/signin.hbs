@@ -1,14 +1,28 @@
-<form action="/login" method="POST" id="form">
-    <i class="fas fa-user"></i>
-    <label for="username">Username</label>
-    <input type="text" name="username">
+{{#if errorMessage}}
+    <p class="error-message">
+        {{ errorMessage }}
+    </p>
+{{/if}}
 
-    <i class="fas fa-lock"></i>
-    <label for="password">Password</label>
-    <input type="password" name="password"/>
-    <div class="error-message"></div>
+<form action="/auth/signin" method="post">
+    <div>
+        <label for="email-input"> Email </label>
+        <input type="email" name="email" id="email-input"
+               placeholder="Email">
+    </div>
 
+    <div>
+        <label for="password-input"> Password </label>
+        <input type="password" name="password" id="password-input"
+               placeholder="••••••••••••">
+    </div>
 
-    <button>Sign in</button>
-
+    <button type="submit"> Sign In </button>
 </form>
+
+<p>
+    Or
+    <a href="/auth/signup">
+        Create an account.
+    </a>
+</p>
