@@ -9,6 +9,6 @@ const recordSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: "user" }
 });
 
-const record = mongoose.model("record", recordSchema);
+const Record = mongoose.model("Record", recordSchema);
 
-module.exports = record;
+module.exports = Record;
