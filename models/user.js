@@ -2,16 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    user: String,
+    user: { type: String,require ,unique: true },
     name: String,
     secondName: String,
-    password: String,
-    birthday: new Date(),
+    password: { type: String,require},
+    birthday:  Date(),
     profession: String,
     countrie: String,
-    email: String,
+    email: { type: String,require ,unique: true },
     pictureOfUser: String,
-    phone: Number
 }, {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
 }
