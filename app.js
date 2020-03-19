@@ -10,7 +10,8 @@ const mongoose = require('mongoose');
 const logger = require('morgan');
 const path = require('path');
 const db = 'BePositive';
-
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 
 //init mongoose DB
@@ -49,9 +50,31 @@ app.locals.title = 'Be Positive';
 
 const indexRouter = require('./router/index.js');
 const authRouter = require('./router/auth.js');
-const recordRouter = require('./router/records.js');
-
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+
+
+app.use(session({
+	secret: 'never do your own laundry again',
+	resave: true,
+	saveUninitialized: true,
+	cookie: {maxAge: 60000},
+	store: new MongoStore({
+		mongooseConnection: mongoose.connection,
+		ttl: 24 * 60 * 60 // 1 day
+	})
+}));
+
+app.use((req, res, next) => {
+	if (req.session.currentUser) {
+		next();
+	} else {
+		res.redirect('/');
+	}
+});
+
+
+const recordRouter = require('./router/records.js');
 app.use('/record', recordRouter);
+
 module.exports = app;
