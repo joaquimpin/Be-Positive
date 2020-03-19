@@ -12,6 +12,7 @@ const path = require("path")
 const db = "BePositive"
 
 
+
 //init mongoose DB
 mongoose
     .connect(`mongodb://localhost/${db}`, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -23,7 +24,7 @@ mongoose
     });
 
 
-    const app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -44,13 +45,13 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-app.locals.title ="Be Positive"
+app.locals.title = "Be Positive"
 
-const indexRouter = require ("./router/index.js")
+const indexRouter = require("./router/index.js")
 const authRouter = require("./router/auth.js")
 const recordRouter = require("./router/records.js")
 
-app.use('/',indexRouter);
-app.use('/auth',authRouter);
-app.use('/record',recordRouter);
+app.use('/', indexRouter);
+app.use('/auth', authRouter);
+app.use('/record', recordRouter);
 module.exports = app
