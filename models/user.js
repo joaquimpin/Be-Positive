@@ -2,19 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    username: { type: String, require: true ,unique: true },
+    username: { type: String, require: true, unique: true },
     name: String,
-    secondName: String,
-    password: { type: String,require},
-    birthday:  Date,
+    lastName: String,
+    password: { type: String, require },
+    birthday: {type:Date, default:new Date(2009,12,17)},
     profession: String,
-    countrie: String,
-    email: { type: String,require ,unique: true },
-    pictureOfUser: String,
+    country: String,
+    email: { type: String, require, unique: true },
+    pictureOfUser: { type: String, default: "/images/profileimages/default.png" },
 }, {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
-}
-);
+});
 
 const User = mongoose.model("User", userSchema);
 
