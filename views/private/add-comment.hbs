@@ -1,3 +1,24 @@
-<h1>Add comment and rate your day</h1>
+<section>
+    <div>
+        <h1>How was your day?</h1>
+        <div class="faces">
+            <i class="fas fa-sad-cry"></i>
+            <i class="far fa-frown"></i>
+            <i class="far fa-meh"></i>
+            <i class="far fa-smile"></i>
+            <i class="fas fa-laugh-beam"></i>
+        </div>
+    </div>
+    <form action="/private/add-comment" method="post">
+        <div>
+            <h2>Write your positive achievement</h2>
+            <input type="text" name="text"/>
+        </div>
+        <button type="submit">Share</button>
+        <a href="./wall" class="cancel-button">Cancel</a>
+    </form>
+</section>
 
-
+{{#if errorMessage}}
+    <div class="error-message">{{ errorMessage }}</div>
+{{/if}}
