@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser');
 const arrayCountries = require('../bin/countrie');
 const arrayProfession = require('../bin/profession');
 const User = require('../models/user');
@@ -114,7 +115,7 @@ router.post('/signup', async (req, res, next) => {
 });
 
 router.get('/edit', (req, res, next) => {
-  console.log(req.session.currentUser)
+  //console.log(req.session.currentUser)
   let { username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday } = req.session.currentUser
   stringBirthday = new Date(birthday)
   stringBirthday = stringBirthday.getFullYear().toString() + '-' + (stringBirthday.getMonth() + 1).toString().padStart(2, 0) + '-' + stringBirthday.getDate().toString().padStart(2, 0)
@@ -125,18 +126,21 @@ router.get('/edit', (req, res, next) => {
 
 
 router.post('/edit', (req, res, next) => {
-
   //upload picture
   upload(req, res, function (err) {
     if (err) {
-      return res.end("Error uploading file.");
+      return request.end("Error uploading file.");
     }
-    //const File = `${req.file.filename}`;
-    res.end("File is uploaded");
+    const Filename = `${req.file.filename}`;
+    console.log(req.body)
+    console.log(req.session)
+    res.redirect('edit');
   });
 
 
 });
+
+
 
 function findSelectedInArray(array, selection) {
   let arrayObjects = []

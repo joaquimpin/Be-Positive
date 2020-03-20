@@ -1,4 +1,6 @@
 <form id="form" action="/auth/edit" enctype="multipart/form-data" method="post">
+    <img src={{pictureOfUser}} alt="" srcset="">
+    <input type="file" name="pictureOfUser" accept="image/png, image/jpg">
     <input type="text" name="username" required placeholder="Username" value={{username}}><br>
     <input type="text" name="name" required placeholder="Name" value={{name}}><br>
     <input type="text" name="lastName" required placeholder="Lastname" value={{lastName}}><br>
@@ -6,8 +8,7 @@
     <input type="date" name="birthday" value={{stringBirthday}}><br>
     <input type="password" name="password" placeholder="********"><br>
     <input type="password" name="repeatPassword" placeholder="********"><br>
-    <img src={{pictureOfUser}} alt="" srcset="">
-    <input type="file" name="pictureOfUser" accept="image/png, image/jpg">
+
     <select name="country">
         {{#each countries}}
         <option {{#if this.status}}selected {{/if}}value="{{this.element}}">{{this.element}}</option>
