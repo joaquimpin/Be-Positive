@@ -13,6 +13,10 @@ const db = 'BePositive';
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
+//partials
+hbs.registerPartials(__dirname + '/views/partials');
+
+
 
 //init mongoose DB
 mongoose
@@ -46,13 +50,6 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
-app.locals.title = 'Be Positive';
-
-const indexRouter = require('./router/index.js');
-const authRouter = require('./router/auth.js');
-app.use('/', indexRouter);
-app.use('/auth', authRouter);
-
 
 app.use(session({
 	secret: 'never do your own laundry again',
@@ -65,6 +62,14 @@ app.use(session({
 	})
 }));
 
+app.locals.title = 'Be Positive';
+
+const indexRouter = require('./router/index.js');
+const authRouter = require('./router/auth.js');
+app.use('/', indexRouter);
+app.use('/auth', authRouter);
+
+
 app.use((req, res, next) => {
 	if (req.session.currentUser) {
 		next();
@@ -74,7 +79,7 @@ app.use((req, res, next) => {
 });
 
 
-const recordRouter = require('./router/records.js');
-app.use('/record', recordRouter);
+const privateRouter = require('./router/private.js');
+app.use('/', privateRouter);
 
 module.exports = app;

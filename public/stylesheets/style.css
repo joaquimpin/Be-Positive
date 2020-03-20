@@ -1,4 +1,13 @@
 .welcome-page img {
   width: 100%; }
 
+.add-button {
+  position: fixed;
+  bottom: 10%;
+  right: 50%;
+  transform: translate(50%, 0); }
+
+.fa-plus-circle {
+  font-size: 60px; }
+
 /*# sourceMappingURL=style.css.map */

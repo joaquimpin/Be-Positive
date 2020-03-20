@@ -3,8 +3,9 @@
 	"file": "style.css",
 	"sources": [
 		"style.scss",
-		"landing.scss"
+		"landing.scss",
+		"partial.scss"
 	],
 	"names": [],
-	"mappings": "ACAA,AACE,aADW,CACX,GAAG,CAAC;EACF,KAAK,EAAE,IAAI,GACZ"
+	"mappings": "ACAA,AACE,aADW,CACX,GAAG,CAAC;EACF,KAAK,EAAE,IAAI,GACZ;;ACHH,AAAA,WAAW,CAAC;EACV,QAAQ,EAAE,KAAK;EACf,MAAM,EAAE,GAAG;EACX,KAAK,EAAE,GAAG;EACV,SAAS,EAAE,iBAAiB,GAC7B;;AAED,AAAA,eAAe,CAAC;EACd,SAAS,EAAE,IAAI,GAChB"
 }
