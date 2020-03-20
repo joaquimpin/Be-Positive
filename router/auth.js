@@ -6,7 +6,21 @@ const User = require('../models/user');
 const regexPassword = new RegExp('.{3,}');
 const regexEmail = new RegExp(`^[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$`);
 const bcrypt = require('bcryptjs');
+const path = require('path');
 const bcryptSalt = 10;
+const multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './public/images/profileimages');
+  },
+  filename: function (req, file, callback) {
+
+    callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+var upload = multer({ storage: storage }).single('pictureOfUser');
+
 
 
 router.get('/signin', (req, res, next) => {
@@ -109,15 +123,20 @@ router.get('/edit', (req, res, next) => {
   res.render('auth/edituser', { job: objectProfession, countries: objectCountries, username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, stringBirthday })
 })
 
+
 router.post('/edit', (req, res, next) => {
 
-})
+  //upload picture
+  upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    //const File = `${req.file.filename}`;
+    res.end("File is uploaded");
+  });
 
 
-
-
-
-
+});
 
 function findSelectedInArray(array, selection) {
   let arrayObjects = []
