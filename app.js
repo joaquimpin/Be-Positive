@@ -80,6 +80,6 @@ app.use((req, res, next) => {
 
 
 const privateRouter = require('./router/private.js');
-app.use('/', privateRouter);
+app.use('/private', privateRouter);
 
 module.exports = app;
