@@ -1,6 +1,12 @@
-<form id="form" action="/auth/edit" enctype="multipart/form-data" method="post">
-    <img src={{pictureOfUser}} alt="" srcset="">
+<form id="form" action="/auth/uploadAvatar" enctype="multipart/form-data" method="post">
+    <img src="/images/profileimages/{{pictureOfUser}}" alt="" srcset=""><br>
     <input type="file" name="pictureOfUser" accept="image/png, image/jpg">
+
+    <button type="submit">Upload avatar</button>
+
+</form>
+<form id="data" action="/auth/edit" method="post">
+
     <input type="text" name="username" required placeholder="Username" value={{username}}><br>
     <input type="text" name="name" required placeholder="Name" value={{name}}><br>
     <input type="text" name="lastName" required placeholder="Lastname" value={{lastName}}><br>
@@ -20,4 +26,5 @@
         {{/each}}
     </select>
     <button type="submit">Create account</button>
+
 </form>

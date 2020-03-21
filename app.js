@@ -20,7 +20,7 @@ hbs.registerPartials(__dirname + '/views/partials');
 
 //init mongoose DB
 mongoose
-	.connect(`mongodb://localhost/${db}`, {useNewUrlParser: true, useUnifiedTopology: true})
+	.connect(`mongodb://localhost/${db}`, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(x => {
 		console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
 	})
@@ -29,11 +29,13 @@ mongoose
 	});
 
 
+mongoose.set('useFindAndModify', false);
+
 const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Express View engine setup
@@ -52,10 +54,10 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
 app.use(session({
-	secret: 'never do your own laundry again',
+	secret: 'Be-Positive',
 	resave: true,
 	saveUninitialized: true,
-	cookie: {maxAge: 60000*30},
+	cookie: { maxAge: 60000 * 3000 },
 	store: new MongoStore({
 		mongooseConnection: mongoose.connection,
 		ttl: 24 * 60 * 60 // 1 day
