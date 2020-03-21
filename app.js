@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const favicon = require('serve-favicon');
 const hbs = require('hbs');
+const hbsIntl = require('handlebars-intl');
 const mongoose = require('mongoose');
 const logger = require('morgan');
 const path = require('path');
@@ -16,6 +17,9 @@ const MongoStore = require('connect-mongo')(session);
 //partials
 hbs.registerPartials(__dirname + '/views/partials');
 
+//hbs-register helpers
+
+hbsIntl.registerWith(hbs);
 
 
 //init mongoose DB
@@ -81,5 +85,7 @@ app.use((req, res, next) => {
 
 const privateRouter = require('./router/private.js');
 app.use('/private', privateRouter);
+
+
 
 module.exports = app;

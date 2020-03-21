@@ -8,9 +8,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/wall', (req, res) => {
-	Record.find({}).sort({createdAt: -1})
+	Record.find({}).populate('owner').sort({createdAt: -1})
 		.then((result) => {
-			// result = result.sort((a, b) => b.createdAt - a.createdAt);
 			res.render('./private/wall', {result});
 		})
 		.catch(error => {
@@ -30,7 +29,11 @@ router.get('/add-comment', (req, res) => {
 
 
 router.post('/add-comment', (req, res, next) => {
-	Record.create(req.body)
+	const record = {
+		text: req.body.text,
+		owner: req.session.currentUser._id
+	};
+	Record.create(record)
 		.then(() => {
 			res.redirect('./wall');
 		})

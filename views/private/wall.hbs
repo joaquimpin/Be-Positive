@@ -1,7 +1,18 @@
 <h1>WALL</h1>
-<div>
+<div class="container">
     {{#each result}}
-        <p>{{ this }}</p>
+        <div class="record">
+            <div class="header">
+                <img src="{{ this.owner.pictureOfUser }}" alt="avatar"/>
+                <div>{{ this.owner.username }}</div>
+            </div>
+            <p class="content">{{this.text}}</p>
+            <div class="footer">
+                <div>{{ formatDate this.createdAt  day="numeric" month="long" year="numeric" }}</div>
+                <div>{{ this.like.length }} <i class="far fa-thumbs-up"></i></div>
+                <!--                <i class="fas fa-thumbs-up"></i>-->
+            </div>
+        </div>
     {{/each}}
 </div>
 
