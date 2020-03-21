@@ -27,40 +27,40 @@ var upload = multer({ storage: storage }).single('pictureOfUser');
 
 
 router.get('/signin', (req, res, next) => {
-  res.render('auth/signin');
+	res.render('auth/signin');
 });
 
 
 router.post('/signin', (req, res) => {
-  const { email, password } = req.body;
+	const {email, password} = req.body;
 
-  if (email === '' || password === '') {
-    res.render('auth/signin', {
-      errorMessage: 'Enter both email and password to log in.'
-    });
-    return;
-  }
-  User.findOne({ email }, (err, user) => {
-    if (err || user === null) {
-      res.render('auth/signin', {
-        errorMessage: `There isn't an account with email ${email}.`
-      });
-      return;
-    }
-    if (!bcrypt.compareSync(password, user.password)) {
-      res.render('auth/signin', {
-        errorMessage: 'Invalid password'
-      });
-      return;
-    }
-    req.session.currentUser = user;
-    res.render('auth/private');
-  });
+	if (email === '' || password === '') {
+		res.render('auth/signin', {
+			errorMessage: 'Enter both email and password to log in.'
+		});
+		return;
+	}
+	User.findOne({email}, (err, user) => {
+		if (err || user === null) {
+			res.render('auth/signin', {
+				errorMessage: `There isn't an account with email ${email}.`
+			});
+			return;
+		}
+		if (!bcrypt.compareSync(password, user.password)) {
+			res.render('auth/signin', {
+				errorMessage: 'Invalid password'
+			});
+			return;
+		}
+		req.session.currentUser = user;
+		res.redirect('/private/wall');
+	});
 });
 
 
 router.get('/signup', (req, res, next) => {
-  res.render('auth/signup', { profession: arrayProfession, countries: arrayCountries });
+	res.render('auth/signup', {profession: arrayProfession, countries: arrayCountries});
 });
 
 //falta exportar els errors al frontend ara simplement pinta per terminal el error! pero volia saver com ho fem primer, si fem errors a cada input text o fem un general a sota/sobre
@@ -138,9 +138,10 @@ router.get('/edit', (req, res, next) => {
     let objectCountries = findSelectedInArray(arrayCountries, country);
     res.render('auth/edituser', { job: objectProfession, countries: objectCountries, username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, stringBirthday });
 
+
   })
 
-})
+});
 
 
 router.post('/uploadAvatar', (req, res, next) => {
