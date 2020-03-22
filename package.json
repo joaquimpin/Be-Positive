@@ -26,10 +26,12 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "fs": "0.0.1-security",
     "handlebars-intl": "^1.1.2",
     "hbs": "^4.1.0",
     "mongoose": "^5.9.5",
     "morgan": "^1.9.1",
+    "multer": "^1.4.2",
     "node-sass-middleware": "^0.11.0",
     "serve-favicon": "^2.5.0"
   }

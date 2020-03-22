@@ -6,11 +6,11 @@ const userSchema = new Schema({
     name: String,
     lastName: String,
     password: { type: String, require },
-    birthday: {type:Date, default:new Date(2009,12,17)},
+    birthday: { type: Date, default: new Date(2009, 12, 17) },
     profession: String,
     country: String,
     email: { type: String, require, unique: true },
-    pictureOfUser: { type: String, default: "/images/profileimages/default.png" },
+    pictureOfUser: { type: String, default: "default.png" },
 }, {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
 });
