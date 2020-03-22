@@ -41,4 +41,15 @@ router.post('/add-comment', (req, res, next) => {
 });
 
 
+router.get('/record/like/:id', async (req, res, next) => {
+	const currentUserId = req.session.currentUser._id;
+	const recordId = req.params.id;
+	const record = await Record.findById(recordId);
+	if (!record.like.includes(currentUserId)) {
+		record.like.push(currentUserId);
+		await record.save();
+	}
+	res.redirect('/private/wall');
+});
+
 module.exports = router;

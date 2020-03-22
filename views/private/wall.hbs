@@ -3,13 +3,18 @@
     {{#each result}}
         <div class="record">
             <div class="header">
-                <img src="{{ this.owner.pictureOfUser }}" alt="avatar"/>
+                <img src="/images/profileimages/{{ this.owner.pictureOfUser }}" alt="avatar"/>
                 <div>{{ this.owner.username }}</div>
             </div>
             <p class="content">{{this.text}}</p>
             <div class="footer">
                 <div>{{ formatDate this.createdAt  day="numeric" month="long" year="numeric" }}</div>
-                <div>{{ this.like.length }} <i class="far fa-thumbs-up"></i></div>
+                <div>
+                    {{ this.like.length }}
+                        <button onclick="addLike('{{ this._id }}')">
+                            <i class="far fa-thumbs-up"></i>
+                        </button>
+                </div>
                 <!--                <i class="fas fa-thumbs-up"></i>-->
             </div>
         </div>
