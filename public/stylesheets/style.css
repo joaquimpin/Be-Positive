@@ -48,6 +48,19 @@
     justify-content: space-between;
     align-items: center; }
 
+.formPicture {
+  margin: 30px; }
+  .formPicture img {
+    height: 120px; }
+
+.formData {
+  margin: 30px; }
+  .formData select {
+    width: 50%; }
+  .formData input {
+    width: 150px;
+    border: 1px; }
+
 body {
   font-family: HKGrotesk-Medium; }
 

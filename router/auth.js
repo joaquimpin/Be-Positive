@@ -26,40 +26,40 @@ var upload = multer({ storage: storage }).single('pictureOfUser');
 
 
 router.get('/signin', (req, res, next) => {
-	res.render('auth/signin');
+  res.render('auth/signin');
 });
 
 
 router.post('/signin', (req, res) => {
-	const {email, password} = req.body;
+  const { email, password } = req.body;
 
-	if (email === '' || password === '') {
-		res.render('auth/signin', {
-			errorMessage: 'Enter both email and password to log in.'
-		});
-		return;
-	}
-	User.findOne({email}, (err, user) => {
-		if (err || user === null) {
-			res.render('auth/signin', {
-				errorMessage: `There isn't an account with email ${email}.`
-			});
-			return;
-		}
-		if (!bcrypt.compareSync(password, user.password)) {
-			res.render('auth/signin', {
-				errorMessage: 'Invalid password'
-			});
-			return;
-		}
-		req.session.currentUser = user;
-		res.redirect('/private/wall');
-	});
+  if (email === '' || password === '') {
+    res.render('auth/signin', {
+      errorMessage: 'Enter both email and password to log in.'
+    });
+    return;
+  }
+  User.findOne({ email }, (err, user) => {
+    if (err || user === null) {
+      res.render('auth/signin', {
+        errorMessage: `There isn't an account with email ${email}.`
+      });
+      return;
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+      res.render('auth/signin', {
+        errorMessage: 'Invalid password'
+      });
+      return;
+    }
+    req.session.currentUser = user;
+    res.redirect('/private/wall');
+  });
 });
 
 
 router.get('/signup', (req, res, next) => {
-	res.render('auth/signup', {profession: arrayProfession, countries: arrayCountries});
+  res.render('auth/signup', { profession: arrayProfession, countries: arrayCountries });
 });
 
 //falta exportar els errors al frontend ara simplement pinta per terminal el error! pero volia saver com ho fem primer, si fem errors a cada input text o fem un general a sota/sobre
@@ -96,7 +96,7 @@ router.post('/signup', async (req, res, next) => {
       res.render('auth/signup', {
         errorMessage: `Please provide a vailid e-mail.`
       });
-            break;
+      break;
 
 
     default:
@@ -170,7 +170,7 @@ router.post('/edit', (req, res, next) => {
 
   User.findById(req.session.currentUser._id).then(response => {
 
-    let { username, name, lastName, password, repeatPassword, profession, country, birthday } = res.body
+    let { username, name, lastName, password, repeatPassword, profession, country, birthday } = req.body
     if (username != '') {
       response.username = username;
     }
@@ -178,12 +178,12 @@ router.post('/edit', (req, res, next) => {
       response.name = name;
     }
     if (lastName != '') {
-      
+
       response.lastName = lastName;
     }
     response.profession = profession;
     response.country = country;
-    response.birthday = birthday;
+    response.birthday = new Date(birthday);
     if (password != '' && repeatPassword === password && regexPassword.test(password)) {
       const salt = bcrypt.genSaltSync(bcryptSalt);
       response.password = bcrypt.hashSync(password, salt);
@@ -197,7 +197,7 @@ router.post('/edit', (req, res, next) => {
       .then((respuesta) => {
         req.session.currentUser = respuesta
         console.log('User updated');
-        res.redirect('auth/edituser')
+        res.redirect('/auth/edit')
       })
   })
 })
