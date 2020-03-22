@@ -1,11 +1,16 @@
+{{#if errorMessage}}
+    <p class="error-message">
+        {{ errorMessage }}
+    </p>
+{{/if}}
 <a href="/"><i class="fas fa-times"></i></a>
 <form id="form" action="/auth/signup" method="post">
-    <input type="text" name="username" required placeholder="Username"/><br>
-    <input type="text" name="name" required placeholder="Name"/><br>
-    <input type="text" name="lastName" required placeholder="Lastname"/><br>
-    <input type="email" name="email" required placeholder="E-mail"/><br>
-    <input type="password" name="password" required placeholder="********"/><br>
-    <input type="password" name="repeatPassword" required placeholder="********"/><br>
+    <input type="text" name="username"  placeholder="Username"/><br>
+    <input type="text" name="name"  placeholder="Name"/><br>
+    <input type="text" name="lastName"  placeholder="Lastname"/><br>
+    <input type="email" name="email"  placeholder="E-mail"/><br>
+    <input type="password" name="password"  placeholder="********"/><br>
+    <input type="password" name="repeatPassword"  placeholder="********"/><br>
     <select name="country">
         <option disabled selected>Select a country</option>
         {{#each countries}}

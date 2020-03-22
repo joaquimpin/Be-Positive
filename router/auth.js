@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
 const arrayCountries = require('../bin/countrie');
 const arrayProfession = require('../bin/profession');
 const User = require('../models/user');
@@ -8,11 +7,11 @@ const regexPassword = new RegExp('.{3,}');
 const regexEmail = new RegExp(`^[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$`);
 const bcrypt = require('bcryptjs');
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
 const bcryptSalt = 10;
-const routeAvatarPictures = '../images/profileimages/'
+const routeAvatarPictures = '../images/profileimages/';
 const multer = require('multer');
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, './public/images/profileimages');
   },
@@ -119,7 +118,7 @@ router.post('/signup', async (req, res, next) => {
 
         user = await User.create({ username, name, lastName, password: hashPass, email, profession, country });
         req.session.currentUser = user;
-        res.redirect('/auth/edit')
+        res.redirect('/private/wall');
       } catch (e) {
         console.error(e);
         next(e);

@@ -9,6 +9,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{title}}</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script>
+        function addLike(id) {
+        	fetch('/private/record/like/' + id)
+            .then(() => document.location.reload())
+        }
+    </script>
 </head>
 
 <body>
