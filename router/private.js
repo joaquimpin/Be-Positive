@@ -5,6 +5,7 @@ const User = require('../models/user');
 const arrayCountries = require('../bin/countrie');
 const arrayProfession = require('../bin/profession');
 const fs = require('fs');
+const bcrypt = require('bcryptjs');
 const bcryptSalt = 10;
 const path = require('path');
 const routeAvatarPictures = '../images/profileimages/';
