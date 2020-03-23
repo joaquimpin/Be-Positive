@@ -44,40 +44,29 @@ router.get('/signup', (req, res, next) => {
   res.render('auth/signup', { profession: arrayProfession, countries: arrayCountries });
 });
 
-//falta exportar els errors al frontend ara simplement pinta per terminal el error! pero volia saver com ho fem primer, si fem errors a cada input text o fem un general a sota/sobre
 
 router.post('/signup', async (req, res, next) => {
   const { name, username, lastName, password, repeatPassword, email, profession, country } = req.body;
   switch (true) {
     case username === '':
-      res.render('auth/signup', {
-        errorMessage: `The username cannot be blank .`
-      });
+      res.render('auth/signup', { profession: arrayProfession, countries: arrayCountries, errorMessage: `The username cannot be blank.` });
       break;
 
     case !regexPassword.test(password):
-      res.render('auth/signup', {
-        errorMessage: `password too weak .`
-      });
+      res.render('auth/signup', { profession: arrayProfession, countries: arrayCountries, errorMessage: `password too weak.` });
       break;
 
     case !regexEmail.test(req.body.email):
-      res.render('auth/signup', {
-        errorMessage: `Please provide a vailid e-mail.`
-      });
+      res.render('auth/signup', { profession: arrayProfession, countries: arrayCountries, errorMessage: `Please provide a vailid e-mail.` });
       break;
 
     case password === '':
       console.log('password must be filled');
-      res.render('auth/signup', {
-        errorMessage: `The password cannot be blank .`
-      });
+      res.render('auth/signup', { profession: arrayProfession, countries: arrayCountries, errorMessage: `The password cannot be blank .` });
       break;
 
     case password !== repeatPassword:
-      res.render('auth/signup', {
-        errorMessage: `passwords do not match.`
-      });
+      res.render('auth/signup', { profession: arrayProfession, countries: arrayCountries, errorMessage: `passwords do not match.` });
       break;
 
     default:
