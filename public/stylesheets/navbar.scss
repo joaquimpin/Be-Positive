@@ -1,0 +1,19 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  & > * {
+    flex-basis: 33%;
+  }
+  .title {
+    flex: 1;
+  }
+  img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+  form {
+    text-align: right;
+  }
+}

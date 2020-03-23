@@ -108,7 +108,10 @@ router.post('/signup', async (req, res, next) => {
 });
 
 
-
+router.post('/logout', (req, res) => {
+  req.session.currentUser = null;
+  res.redirect('/');
+});
 
 
 
