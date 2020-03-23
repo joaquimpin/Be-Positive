@@ -6,22 +6,7 @@ const User = require('../models/user');
 const regexPassword = new RegExp('.{3,}');
 const regexEmail = new RegExp(`^[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$`);
 const bcrypt = require('bcryptjs');
-const path = require('path');
-const fs = require('fs');
-const bcryptSalt = 10;
-const routeAvatarPictures = '../images/profileimages/';
-const multer = require('multer');
-const storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './public/images/profileimages');
-  },
-  filename: function (req, file, callback) {
 
-    callback(null, 'AvatarImage' + Date.now() + path.extname(file.originalname));
-  }
-});
-
-var upload = multer({ storage: storage }).single('pictureOfUser');
 
 
 
@@ -67,22 +52,9 @@ router.get('/signup', (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   const { name, username, lastName, password, repeatPassword, email, profession, country } = req.body;
   switch (true) {
-    case password === '':
-      console.log('password must be filled');
-      res.render('auth/signup', {
-        errorMessage: `The password cannot be blank .`
-      });
-      break;
-
     case username === '':
       res.render('auth/signup', {
         errorMessage: `The username cannot be blank .`
-      });
-      break;
-
-    case password !== repeatPassword:
-      res.render('auth/signup', {
-        errorMessage: `passwords do not match.`
       });
       break;
 
@@ -98,6 +70,18 @@ router.post('/signup', async (req, res, next) => {
       });
       break;
 
+    case password === '':
+      console.log('password must be filled');
+      res.render('auth/signup', {
+        errorMessage: `The password cannot be blank .`
+      });
+      break;
+
+    case password !== repeatPassword:
+      res.render('auth/signup', {
+        errorMessage: `passwords do not match.`
+      });
+      break;
 
     default:
       try {
@@ -128,95 +112,7 @@ router.post('/signup', async (req, res, next) => {
 
 
 
-router.get('/edit', (req, res, next) => {
-  User.findById(req.session.currentUser._id).then(response => {
-    let { username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday } = response
-    stringBirthday = new Date(birthday);
-    stringBirthday = stringBirthday.getFullYear().toString() + '-' + (stringBirthday.getMonth() + 1).toString().padStart(2, 0) + '-' + stringBirthday.getDate().toString().padStart(2, 0);
-    let objectProfession = findSelectedInArray(arrayProfession, profession);
-    let objectCountries = findSelectedInArray(arrayCountries, country);
-    res.render('auth/edituser', { job: objectProfession, countries: objectCountries, username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, stringBirthday });
 
-
-  })
-
-});
-
-
-router.post('/uploadAvatar', (req, res, next) => {
-  //upload picture
-  upload(req, res, function (err) {
-    if (err) {
-      return request.end('Error uploading file.');
-    }
-    let actualPictureName;
-    console.log(req.session.currentUser.email);
-    User.findById(req.session.currentUser._id)
-      .then(response => actualPictureName = response.pictureOfUser);
-    User.findByIdAndUpdate(req.session.currentUser._id, { pictureOfUser: req.file.filename })
-      .then((respuesta) => {
-        if (actualPictureName !== 'default.png') {
-          fs.unlinkSync(path.join(__dirname, '/../', '/public/images/profileimages/', actualPictureName));
-        }
-        req.session.currentUser = respuesta;
-        res.redirect('edit');
-      }
-      )
-  });
-
-
-});
-router.post('/edit', (req, res, next) => {
-
-  User.findById(req.session.currentUser._id).then(response => {
-
-    let { username, name, lastName, password, repeatPassword, profession, country, birthday } = req.body
-    if (username != '') {
-      response.username = username;
-    }
-    if (name != '') {
-      response.name = name;
-    }
-    if (lastName != '') {
-
-      response.lastName = lastName;
-    }
-    response.profession = profession;
-    response.country = country;
-    response.birthday = new Date(birthday);
-    if (password != '' && repeatPassword === password && regexPassword.test(password)) {
-      const salt = bcrypt.genSaltSync(bcryptSalt);
-      response.password = bcrypt.hashSync(password, salt);
-    } else {
-      if (password != '') {
-        console.log('fallo al cambiar el password');
-        res.render('auth/edituser', response);
-      }
-    }
-    User.findByIdAndUpdate(req.session.currentUser._id, response)
-      .then((respuesta) => {
-        req.session.currentUser = respuesta
-        console.log('User updated');
-        res.redirect('/auth/edit')
-      })
-  })
-})
-
-
-
-
-
-function findSelectedInArray(array, selection) {
-  let arrayObjects = []
-  array.map(function (element) {
-    if (element == selection) {
-      arrayObjects.push({ element: element, status: true })
-    } else {
-      arrayObjects.push({ element: element, status: '' })
-    }
-  })
-  return arrayObjects
-}
 
 
 

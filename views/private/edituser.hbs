@@ -1,13 +1,13 @@
 <div class="container">
     <div class="formPicture">
-        <form action="/auth/uploadAvatar" enctype="multipart/form-data" method="post">
+        <form action="/private/uploadAvatar" enctype="multipart/form-data" method="post">
             <img src="/images/profileimages/{{pictureOfUser}}" alt="" srcset=""><br>
             <input type="file" name="pictureOfUser" accept="image/png, image/jpg"><br>
             <button type="submit">Upload avatar</button>
         </form>
     </div>
     <div class="formData">
-        <form id="data" action="/auth/edit" method="post">
+        <form id="data" action="/private/edit" method="post">
 
             <input type="text" name="username" required placeholder="Username" value={{username}}><br>
             <input type="text" name="name" required placeholder="Name" value={{name}}><br>
