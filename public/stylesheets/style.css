@@ -62,14 +62,20 @@
     width: 150px;
     border: 1px; }
 
-nav {
+.navbar {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: baseline;
-  align-content: center;
-  background-color: blue; }
+  align-items: center; }
+  .navbar > * {
+    flex-basis: 33%; }
+  .navbar .title {
+    flex: 1; }
+  .navbar img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%; }
+  .navbar form {
+    text-align: right; }
 
 body {
   font-family: HKGrotesk-Medium; }

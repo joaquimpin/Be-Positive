@@ -14,9 +14,6 @@ const db = 'BePositive';
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-//partials
-hbs.registerPartials(__dirname + '/views/partials');
-
 //hbs-register helpers
 
 hbsIntl.registerWith(hbs);
@@ -41,6 +38,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//partials
+hbs.registerPartials(__dirname + '/views/partials');
+
 
 // Express View engine setup
 
