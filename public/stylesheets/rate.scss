@@ -1,0 +1,39 @@
+.faces {
+  display: flex;
+  justify-content: center;
+
+  i {
+    font-size: 3.5rem;
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+    &[data-selected="false"] {
+      opacity: 0.5;
+    }
+  }
+
+  .fa-sad-cry {
+    color: #FC4C51;
+  }
+
+  .fa-frown {
+    color: #FA9D32;
+  }
+
+  .fa-meh {
+    color: #F8E719;
+  }
+
+  .fa-smile {
+    color: #ACF019;
+  }
+
+  .fa-laugh-beam {
+    color: #02E674;
+  }
+}
+
+#rating {
+  display: none;
+}

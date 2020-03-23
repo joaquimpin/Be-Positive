@@ -2,14 +2,15 @@
     <div>
         <h1>How was your day?</h1>
         <div class="faces">
-            <i class="fas fa-sad-cry"></i>
-            <i class="far fa-frown"></i>
-            <i class="far fa-meh"></i>
-            <i class="far fa-smile"></i>
-            <i class="fas fa-laugh-beam"></i>
+            <i onclick="rate(1)" class="fas fa-sad-cry" data-selected="true" id="1"></i>
+            <i onclick="rate(2)" class="fas fa-frown" data-selected="true" id="2"></i>
+            <i onclick="rate(3)" class="fas fa-meh" data-selected="true" id="3"></i>
+            <i onclick="rate(4)" class="fas fa-smile" data-selected="true" id="4"></i>
+            <i onclick="rate(5)" class="fas fa-laugh-beam" data-selected="true" id="5"></i>
         </div>
     </div>
     <form action="/private/add-comment" method="post">
+        <input type="number" name="rating" id="rating"/>
         <div>
             <h2>Write your positive achievement</h2>
             <input type="text" name="text"/>
