@@ -29,17 +29,6 @@
 .record {
   margin-bottom: 1rem;
   padding: 8px; }
-  .record .header {
-    font-family: HKGrotesk-Bold;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center; }
-    .record .header img {
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      margin-right: 8px; }
   .record .content {
     font-size: 1.5rem; }
   .record .footer {
@@ -47,6 +36,18 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center; }
+
+.header {
+  font-family: HKGrotesk-Bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center; }
+  .header img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin-right: 8px; }
 
 .formPicture {
   margin: 30px; }

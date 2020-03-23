@@ -10,7 +10,7 @@
             <div class="footer">
                 <div>{{ formatDate this.createdAt  day="numeric" month="long" year="numeric" }}</div>
                 <div>
-                    {{ this.like.length }}
+                    <a href="/private/likes/{{this._id}}">{{ this.like.length }}</a>
                         <button onclick="addLike('{{ this._id }}')">
                             <i class="far fa-thumbs-up"></i>
                         </button>
