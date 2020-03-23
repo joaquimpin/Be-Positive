@@ -74,10 +74,10 @@ router.get('/record/like/:id', async (req, res, next) => {
 });
 
 router.get('/edit', (req, res, next) => {
-	console.log(req.session.currentUser._id)
+	console.log(req.session.currentUser._id);
 	User.findById(req.session.currentUser._id).then(response => {
 
-		let { username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday } = response
+		let { username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday } = response;
 		stringBirthday = new Date(birthday);
 		stringBirthday = stringBirthday.getFullYear().toString() + '-' + (stringBirthday.getMonth() + 1).toString().padStart(2, 0) + '-' + stringBirthday.getDate().toString().padStart(2, 0);
 		let objectProfession = findSelectedInArray(arrayProfession, profession);
@@ -117,51 +117,62 @@ router.post('/edit', (req, res, next) => {
 
 	User.findById(req.session.currentUser._id).then(response => {
 
-		let { username, name, lastName, password, repeatPassword, profession, country, birthday } = req.body
-		if (username != '') {
+		let { username, name, lastName, password, repeatPassword, profession, country, birthday } = req.body;
+		if (username !== '') {
 			response.username = username;
 		}
-		if (name != '') {
+		if (name !== '') {
 			response.name = name;
 		}
-		if (lastName != '') {
+		if (lastName !== '') {
 
 			response.lastName = lastName;
 		}
 		response.profession = profession;
 		response.country = country;
 		response.birthday = new Date(birthday);
-		if (password != '' && repeatPassword === password && regexPassword.test(password)) {
+		if (password !== '' && repeatPassword === password && regexPassword.test(password)) {
 			const salt = bcrypt.genSaltSync(bcryptSalt);
 			response.password = bcrypt.hashSync(password, salt);
 		} else {
-			if (password != '') {
+			if (password !== '') {
 				console.log('fallo al cambiar el password');
 				res.render('auth/edituser', response);
 			}
 		}
 		User.findByIdAndUpdate(req.session.currentUser._id, response)
 			.then((respuesta) => {
-				req.session.currentUser = respuesta
+				req.session.currentUser = respuesta;
 				console.log('User updated');
 				res.redirect('/private/edit')
 			})
 	})
-})
+});
 
 
 function findSelectedInArray(array, selection) {
-	let arrayObjects = []
+	let arrayObjects = [];
 	array.map(function (element) {
-		if (element == selection) {
+		if (element === selection) {
 			arrayObjects.push({ element: element, status: true })
 		} else {
 			arrayObjects.push({ element: element, status: '' })
 		}
-	})
+	});
 	return arrayObjects
 }
 
+router.get('/likes/:id', (req, res) => {
+	Record.findById(req.params.id).populate('like').sort({ createdAt: -1 })
+		.then((result) => {
+			result = result.like;
+			console.log(result);
+			res.render('./private/likes', { result });
+		})
+		.catch(error => {
+			console.error('Error while seeing likes', error);
+		})
+});
 
 
 module.exports = router;
