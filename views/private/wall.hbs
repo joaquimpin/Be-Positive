@@ -23,5 +23,8 @@
     {{/each}}
 </div>
 
+{{#if errorMessage}}
+    <div class="error-message">{{ errorMessage }}</div>
+{{/if}}
 
 {{> addCommentPartial }}

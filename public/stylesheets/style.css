@@ -77,7 +77,33 @@
   .navbar form {
     text-align: right; }
 
+.faces {
+  display: flex;
+  justify-content: center; }
+  .faces i {
+    font-size: 3.5rem; }
+    .faces i:not(:last-child) {
+      margin-right: 0.5rem; }
+    .faces i[data-selected="false"] {
+      opacity: 0.5; }
+  .faces .fa-sad-cry {
+    color: #FC4C51; }
+  .faces .fa-frown {
+    color: #FA9D32; }
+  .faces .fa-meh {
+    color: #F8E719; }
+  .faces .fa-smile {
+    color: #ACF019; }
+  .faces .fa-laugh-beam {
+    color: #02E674; }
+
+#rating {
+  display: none; }
+
 body {
   font-family: HKGrotesk-Medium; }
+
+.error-message {
+  color: darkred; }
 
 /*# sourceMappingURL=style.css.map */

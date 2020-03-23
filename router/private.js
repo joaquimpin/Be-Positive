@@ -50,9 +50,18 @@ router.get('/add-comment', (req, res) => {
 
 
 router.post('/add-comment', (req, res, next) => {
+	if (req.body.rating === '') {
+		res.render('private/add-comment', {errorMessage: 'Please, rate your day'});
+		return;
+	}
+	if (req.body.text === '') {
+		res.render('private/add-comment', {errorMessage: 'Please, write a positive statement'});
+		return;
+	}
 	const record = {
 		text: req.body.text,
-		owner: req.session.currentUser._id
+		owner: req.session.currentUser._id,
+		rate: req.body.rating,
 	};
 	Record.create(record)
 		.then(() => {

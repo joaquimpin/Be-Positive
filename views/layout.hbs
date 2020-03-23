@@ -8,20 +8,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
     <script>
         function addLike(id) {
-        	fetch('/private/record/like/' + id)
-            .then(() => document.location.reload())
+            fetch('/private/record/like/' + id)
+                    .then(() => document.location.reload())
+        }
+
+        function rate(n) {
+            document.getElementById('rating').value = n;
+            let faces = document.getElementsByClassName('fas');
+            Array.from(faces).forEach((e) => {
+                if (e.id === n.toString()) {
+                    e.setAttribute('data-selected', 'true');
+                } else {
+                    e.setAttribute('data-selected', 'false');
+                }
+            })
         }
     </script>
 </head>
 
 <body>
 
-    {{{body}}}
+{{{body}}}
 
-    {{!-- <script src="/javascripts/script.js"></script> --}}
+{{!-- <script src="/javascripts/script.js"></script> --}}
 </body>
 
 </html>

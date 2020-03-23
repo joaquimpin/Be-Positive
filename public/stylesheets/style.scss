@@ -4,7 +4,12 @@
 @import "wall";
 @import "edituser";
 @import "navbar";
+@import "rate";
 
 body {
   font-family: HKGrotesk-Medium;
+}
+
+.error-message {
+  color: darkred;
 }
