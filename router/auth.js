@@ -6,10 +6,7 @@ const User = require('../models/user');
 const regexPassword = new RegExp('.{3,}');
 const regexEmail = new RegExp(`^[a-z0-9!#$%&'*+/=?^_{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$`);
 const bcrypt = require('bcryptjs');
-
-
-
-
+const bcryptSalt = 10;
 router.get('/signin', (req, res, next) => {
   res.render('auth/signin');
 });
@@ -33,7 +30,7 @@ router.post('/signin', (req, res) => {
     }
     if (!bcrypt.compareSync(password, user.password)) {
       res.render('auth/signin', {
-        errorMessage: 'Invalid password'
+        profession: arrayProfession, countries: arrayCountries, errorMessage: 'Invalid password'
       });
       return;
     }

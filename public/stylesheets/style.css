@@ -61,6 +61,15 @@
     width: 150px;
     border: 1px; }
 
+nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: baseline;
+  align-content: center;
+  background-color: blue; }
+
 body {
   font-family: HKGrotesk-Medium; }
 
