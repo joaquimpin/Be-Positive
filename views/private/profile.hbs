@@ -1,3 +1,37 @@
 {{> navbarPartial }}
-<h1>PROFILE</h1>
+<div class="data">
+    <div class="title">
+        <h1>PROFILE</h1>
+        <img class="formPicture" src="/images/profileimages/{{user.pictureOfUser}}" alt="User profile image"
+            srcset=""><br>
+
+    </div>
+    <p> Name:{{user.name}} </p>
+    <p> Username:{{user.username}} </p>
+    <p> Lastname:{{user.lastName}} </p>
+    <p> Email:{{user.email}} </p>
+    <p> Birthday:{{ formatDate user.birthday  day="numeric" month="long" year="numeric" }}</p>
+    <p> Profession:{{user.profession}}</p>
+    <p> country:{{user.country}} </p>
+
+    {{#each record}}
+    <div class="record">
+        <div class="header">
+            <img src="/images/profileimages/{{ this.owner.pictureOfUser }}" alt="avatar" />
+            <div>{{ this.owner.username }}</div>
+        </div>
+        <p class="content">{{this.text}}</p>
+        <div class="footer">
+            <div>{{ formatDate this.createdAt  day="numeric" month="long" year="numeric" }}</div>
+            <div>
+                <a href="/private/likes/{{this._id}}">{{ this.like.length }}</a>
+                <button onclick="addLike('{{ this._id }}')">
+                    <i class="far fa-thumbs-up"></i>
+            </div>
+            <!--                <i class="fas fa-thumbs-up"></i>-->
+        </div>
+    </div>
+    {{/each}}
+</div>
+
 {{> addCommentPartial }}

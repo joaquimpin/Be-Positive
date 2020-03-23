@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 	}
 });
 
-var upload = multer({storage: storage}).single('pictureOfUser');
+var upload = multer({ storage: storage }).single('pictureOfUser');
 
 
 /* GET home page */
@@ -29,9 +29,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/wall', (req, res) => {
-	Record.find({}).populate('owner').sort({createdAt: -1})
+	Record.find({}).populate('owner').sort({ createdAt: -1 })
 		.then((result) => {
-			res.render('./private/wall', {result, user: req.session.currentUser, image: true, wall: false});
+			res.render('./private/wall', { result, user: req.session.currentUser, image: true, wall: false });
 		})
 		.catch(error => {
 			console.error('Error while publishing your comment', error);
@@ -39,8 +39,10 @@ router.get('/wall', (req, res) => {
 });
 
 
-router.get('/profile', (req, res) => {
-	res.render('private/profile', {user: req.session.currentUser, wall: true, logout: true});
+router.get('/profile', async (req, res) => {
+	let user = await User.findById(req.session.currentUser._id);
+	let record = await Record.find({ owner: req.session.currentUser._id }).populate('owner').sort({ createdAt: -1 });
+	res.render('private/profile', { user, record, wall: true, logout: true });
 });
 
 
@@ -51,11 +53,11 @@ router.get('/add-comment', (req, res) => {
 
 router.post('/add-comment', (req, res, next) => {
 	if (req.body.rating === '') {
-		res.render('private/add-comment', {errorMessage: 'Please, rate your day'});
+		res.render('private/add-comment', { errorMessage: 'Please, rate your day' });
 		return;
 	}
 	if (req.body.text === '') {
-		res.render('private/add-comment', {errorMessage: 'Please, write a positive statement'});
+		res.render('private/add-comment', { errorMessage: 'Please, write a positive statement' });
 		return;
 	}
 	const record = {
@@ -67,7 +69,7 @@ router.post('/add-comment', (req, res, next) => {
 		.then(() => {
 			res.redirect('./wall');
 		})
-		.catch(() => res.render('private/add-comment', {errorMessage: 'Ops. Something went wrong with your publications. Try again'}))
+		.catch(() => res.render('private/add-comment', { errorMessage: 'Ops. Something went wrong with your publications. Try again' }))
 });
 
 
@@ -83,10 +85,9 @@ router.get('/record/like/:id', async (req, res, next) => {
 });
 
 router.get('/edit', (req, res, next) => {
-	console.log(req.session.currentUser._id);
 	User.findById(req.session.currentUser._id).then(response => {
 
-		let {username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday} = response;
+		let { username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday } = response;
 		stringBirthday = new Date(birthday);
 		stringBirthday = stringBirthday.getFullYear().toString() + '-' + (stringBirthday.getMonth() + 1).toString().padStart(2, 0) + '-' + stringBirthday.getDate().toString().padStart(2, 0);
 		let objectProfession = findSelectedInArray(arrayProfession, profession);
@@ -118,17 +119,16 @@ router.post('/uploadAvatar', (req, res, next) => {
 			return request.end('Error uploading file.');
 		}
 		let actualPictureName;
-		console.log(req.session.currentUser.email);
 		User.findById(req.session.currentUser._id)
 			.then(response => actualPictureName = response.pictureOfUser);
-		User.findByIdAndUpdate(req.session.currentUser._id, {pictureOfUser: req.file.filename})
+		User.findByIdAndUpdate(req.session.currentUser._id, { pictureOfUser: req.file.filename })
 			.then((respuesta) => {
-					if (actualPictureName !== 'default.png') {
-						fs.unlinkSync(path.join(__dirname, '/../', '/public/images/profileimages/', actualPictureName));
-					}
-					req.session.currentUser = respuesta;
-					res.redirect('edit');
+				if (actualPictureName !== 'default.png') {
+					fs.unlinkSync(path.join(__dirname, '/../', '/public/images/profileimages/', actualPictureName));
 				}
+				req.session.currentUser = respuesta;
+				res.redirect('edit');
+			}
 			)
 	});
 
@@ -138,7 +138,7 @@ router.post('/edit', (req, res, next) => {
 
 	User.findById(req.session.currentUser._id).then(response => {
 
-		let {username, name, lastName, password, repeatPassword, profession, country, birthday} = req.body;
+		let { username, name, lastName, password, repeatPassword, profession, country, birthday } = req.body;
 		if (username !== '') {
 			response.username = username;
 		}
@@ -175,20 +175,19 @@ function findSelectedInArray(array, selection) {
 	let arrayObjects = [];
 	array.map(function (element) {
 		if (element === selection) {
-			arrayObjects.push({element: element, status: true})
+			arrayObjects.push({ element: element, status: true })
 		} else {
-			arrayObjects.push({element: element, status: ''})
+			arrayObjects.push({ element: element, status: '' })
 		}
 	});
 	return arrayObjects
 }
 
 router.get('/likes/:id', (req, res) => {
-	Record.findById(req.params.id).populate('like').sort({createdAt: -1})
+	Record.findById(req.params.id).populate('like').sort({ createdAt: -1 })
 		.then((result) => {
 			result = result.like;
-			console.log(result);
-			res.render('./private/likes', {result, user: req.session.currentUser, image: false, wall: true});
+			res.render('./private/likes', { result, user: req.session.currentUser, image: false, wall: true });
 		})
 		.catch(error => {
 			console.error('Error while seeing likes', error);
