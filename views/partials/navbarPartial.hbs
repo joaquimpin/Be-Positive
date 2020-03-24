@@ -1,7 +1,10 @@
 <nav class="navbar">
     <div>
         {{#if image}}
-            <a class="back" href="/private/profile"><img src="/images/profileimages/{{ user.pictureOfUser }}" alt="avatar"/></a>
+            <a class="back" href="/private/profile">
+                <div class="avatar" style="background-image: url('/images/profileimages/{{user.pictureOfUser}}')"></div>
+<!--                <img src="/images/profileimages/{{ user.pictureOfUser }}" alt="avatar"/>-->
+            </a>
         {{/if}}
         {{#if wall }}
             <a class="back" href="/private/wall"><i class="fas fa-chevron-left"></i></a>

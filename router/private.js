@@ -18,7 +18,6 @@ const storage = multer.diskStorage({
 		callback(null, './public/images/profileimages');
 	},
 	filename: function (req, file, callback) {
-
 		callback(null, 'AvatarImage' + Date.now() + path.extname(file.originalname));
 	}
 });
@@ -65,17 +64,15 @@ router.post('/add-comment', (req, res, next) => {
 		return;
 	}
 	let public = true;
-	console.log(req.body.public);
 	if (req.body.public !== 'public') {
 		public = false;
-
 	}
 
 	const record = {
 		text: req.body.text,
 		owner: req.session.currentUser._id,
 		rate: req.body.rating,
-		public: public
+		public
 	};
 	Record.create(record)
 		.then(() => {
@@ -98,7 +95,6 @@ router.get('/record/like/:id', async (req, res, next) => {
 
 router.get('/edit', (req, res, next) => {
 	User.findById(req.session.currentUser._id).then(response => {
-
 		let {username, _id, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday} = response;
 		stringBirthday = new Date(birthday);
 		stringBirthday = stringBirthday.getFullYear().toString() + '-' + (stringBirthday.getMonth() + 1).toString().padStart(2, 0) + '-' + stringBirthday.getDate().toString().padStart(2, 0);
@@ -131,10 +127,11 @@ router.post('/uploadAvatar', (req, res, next) => {
 		if (err) {
 			return request.end('Error uploading file.');
 		}
+
 		let actualPictureName;
 		User.findById(req.session.currentUser._id)
 			.then(response => actualPictureName = response.pictureOfUser);
-		User.findByIdAndUpdate(req.session.currentUser._id, {pictureOfUser: req.file.filename})
+		User.findByIdAndUpdate(req.session.currentUser._id, {pictureOfUser: req.file.filename}, {new: true})
 			.then((respuesta) => {
 					if (actualPictureName !== 'default.png') {
 						fs.unlinkSync(path.join(__dirname, '/../', '/public/images/profileimages/', actualPictureName));

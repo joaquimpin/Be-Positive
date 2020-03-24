@@ -1,8 +1,7 @@
 {{> navbarPartial }}
 <div class="data">
     <div class="title">
-        <img class="formPicture" src="/images/profileimages/{{user.pictureOfUser}}" alt="User profile image"
-             srcset=""><br>
+        <div class="avatar avatar-profile" style="background-image: url('/images/profileimages/{{user.pictureOfUser}}')"></div><br>
         <a class="edit-pencil" href="/private/edit"><i class="fas fa-user-edit"></i></a>
 
     </div>
@@ -18,7 +17,7 @@
     {{#each record}}
         <div class="record">
             <div class="header">
-                <img src="/images/profileimages/{{ this.owner.pictureOfUser }}" alt="avatar"/>
+                <div class="avatar" style="background-image: url('/images/profileimages/{{this.owner.pictureOfUser}}')"></div>
                 <div class="username">{{ this.owner.username }}</div>
                 {{#unless this.public}}
                     <i class="fas fa-lock lock"></i>
