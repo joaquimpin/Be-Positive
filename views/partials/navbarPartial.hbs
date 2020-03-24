@@ -1,10 +1,10 @@
 <nav class="navbar">
     <div>
         {{#if image}}
-            <a href="/private/profile"><img src="/images/profileimages/{{ user.pictureOfUser }}" alt="avatar"/></a>
+            <a class="back" href="/private/profile"><img src="/images/profileimages/{{ user.pictureOfUser }}" alt="avatar"/></a>
         {{/if}}
         {{#if wall }}
-            <a href="/private/wall">Wall</a>
+            <a class="back" href="/private/wall"><i class="fas fa-chevron-left"></i></a>
         {{/if}}
 
     </div>
@@ -13,7 +13,7 @@
     </div>
     {{#if logout }}
         <form action="/auth/logout" method="POST">
-            <button type="submit">Log Out</button>
+            <button class="nav-button" type="submit">Log Out</button>
         </form>
     {{/if}}
 </nav>

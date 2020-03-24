@@ -13,7 +13,6 @@ const multer = require('multer');
 const mongoose = require('mongoose');
 
 
-
 const storage = multer.diskStorage({
 	destination: function (req, file, callback) {
 		callback(null, './public/images/profileimages');
@@ -24,7 +23,7 @@ const storage = multer.diskStorage({
 	}
 });
 
-var upload = multer({ storage: storage }).single('pictureOfUser');
+var upload = multer({storage: storage}).single('pictureOfUser');
 
 
 /* GET home page */
@@ -33,9 +32,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/wall', (req, res) => {
-	Record.find({ public: true }).populate('owner').sort({ createdAt: -1 })
+	Record.find({public: true}).populate('owner').sort({createdAt: -1})
 		.then((result) => {
-			res.render('./private/wall', { result, user: req.session.currentUser, image: true, wall: false });
+			res.render('./private/wall', {result, user: req.session.currentUser, image: true, wall: false});
 		})
 		.catch(error => {
 			console.error('Error while publishing your comment', error);
@@ -45,8 +44,8 @@ router.get('/wall', (req, res) => {
 
 router.get('/profile', async (req, res) => {
 	let user = await User.findById(req.session.currentUser._id);
-	let record = await Record.find({ owner: req.session.currentUser._id }).populate('owner').sort({ createdAt: -1 });
-	res.render('private/profile', { user, record, wall: true, logout: true });
+	let record = await Record.find({owner: req.session.currentUser._id}).populate('owner').sort({createdAt: -1});
+	res.render('private/profile', {user, record, wall: true, logout: true});
 });
 
 
@@ -58,19 +57,19 @@ router.get('/add-comment', (req, res) => {
 router.post('/add-comment', (req, res, next) => {
 
 	if (req.body.rating === '') {
-		res.render('private/add-comment', { errorMessage: 'Please, rate your day' });
+		res.render('private/add-comment', {errorMessage: 'Please, rate your day'});
 		return;
 	}
 	if (req.body.text === '') {
-		res.render('private/add-comment', { errorMessage: 'Please, write a positive statement' });
+		res.render('private/add-comment', {errorMessage: 'Please, write a positive statement'});
 		return;
 	}
-	let public = true
-	if (req.body.public != "public") {
-		public = false
+	let public = true;
+	console.log(req.body.public);
+	if (req.body.public !== 'public') {
+		public = false;
 
 	}
-	console.log(req.body.private)
 
 	const record = {
 		text: req.body.text,
@@ -82,7 +81,7 @@ router.post('/add-comment', (req, res, next) => {
 		.then(() => {
 			res.redirect('./wall');
 		})
-		.catch(() => res.render('private/add-comment', { errorMessage: 'Ops. Something went wrong with your publications. Try again' }))
+		.catch(() => res.render('private/add-comment', {errorMessage: 'Ops. Something went wrong with your publications. Try again'}))
 });
 
 
@@ -100,7 +99,7 @@ router.get('/record/like/:id', async (req, res, next) => {
 router.get('/edit', (req, res, next) => {
 	User.findById(req.session.currentUser._id).then(response => {
 
-		let { username, _id, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday } = response;
+		let {username, _id, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday} = response;
 		stringBirthday = new Date(birthday);
 		stringBirthday = stringBirthday.getFullYear().toString() + '-' + (stringBirthday.getMonth() + 1).toString().padStart(2, 0) + '-' + stringBirthday.getDate().toString().padStart(2, 0);
 		let objectProfession = findSelectedInArray(arrayProfession, profession);
@@ -135,14 +134,14 @@ router.post('/uploadAvatar', (req, res, next) => {
 		let actualPictureName;
 		User.findById(req.session.currentUser._id)
 			.then(response => actualPictureName = response.pictureOfUser);
-		User.findByIdAndUpdate(req.session.currentUser._id, { pictureOfUser: req.file.filename })
+		User.findByIdAndUpdate(req.session.currentUser._id, {pictureOfUser: req.file.filename})
 			.then((respuesta) => {
-				if (actualPictureName !== 'default.png') {
-					fs.unlinkSync(path.join(__dirname, '/../', '/public/images/profileimages/', actualPictureName));
+					if (actualPictureName !== 'default.png') {
+						fs.unlinkSync(path.join(__dirname, '/../', '/public/images/profileimages/', actualPictureName));
+					}
+					req.session.currentUser = respuesta;
+					res.redirect('edit');
 				}
-				req.session.currentUser = respuesta;
-				res.redirect('edit');
-			}
 			)
 	});
 
@@ -152,7 +151,7 @@ router.post('/edit', (req, res, next) => {
 
 	User.findById(req.session.currentUser._id).then(response => {
 
-		let { username, name, lastName, password, repeatPassword, profession, country, birthday } = req.body;
+		let {username, name, lastName, password, repeatPassword, profession, country, birthday} = req.body;
 		if (username !== '') {
 			response.username = username;
 		}
@@ -189,19 +188,19 @@ function findSelectedInArray(array, selection) {
 	let arrayObjects = [];
 	array.map(function (element) {
 		if (element === selection) {
-			arrayObjects.push({ element: element, status: true })
+			arrayObjects.push({element: element, status: true})
 		} else {
-			arrayObjects.push({ element: element, status: '' })
+			arrayObjects.push({element: element, status: ''})
 		}
 	});
 	return arrayObjects
 }
 
 router.get('/likes/:id', (req, res) => {
-	Record.findById(req.params.id).populate('like').sort({ createdAt: -1 })
+	Record.findById(req.params.id).populate('like').sort({createdAt: -1})
 		.then((result) => {
 			result = result.like;
-			res.render('./private/likes', { result, user: req.session.currentUser, image: false, wall: true });
+			res.render('./private/likes', {result, user: req.session.currentUser, image: false, wall: true});
 		})
 		.catch(error => {
 			console.error('Error while seeing likes', error);
@@ -212,15 +211,15 @@ router.get('/delete', (req, res) => {
 	User.findById(req.session.currentUser._id)
 
 		.then(result => {
-			res.render('private/deleteaccount', { result })
+			res.render('private/deleteaccount', {result})
 		})
-})
+});
 
 
 router.post('/confirmdelete', async (req, res, next) => {
 	if (req.body.username === req.session.currentUser.username) {
-		let records = await Record.deleteMany({ owner: req.session.currentUser._id });
-		let user = await User.deleteOne({ _id: req.session.currentUser._id });
+		let records = await Record.deleteMany({owner: req.session.currentUser._id});
+		let user = await User.deleteOne({_id: req.session.currentUser._id});
 		req.session.destroy();
 		console.log(records, user);
 		res.render('private/deleted');
@@ -229,11 +228,16 @@ router.post('/confirmdelete', async (req, res, next) => {
 	} else {
 		User.findById(req.session.currentUser._id)
 			.then(result => {
-				res.render('private/deleteaccount', { result, errorMessage: "confirm username not valid" }
+				res.render('private/deleteaccount', {result, errorMessage: 'confirm username not valid'}
 				)
 			})
 	}
-})
+});
+
+
+router.get('/edit', (req, res) => {
+	res.render('private/edit')
+});
 
 module.exports = router;
 

@@ -6,6 +6,7 @@
 @import "navbar";
 @import "rate";
 @import "auth";
+@import "profile";
 
 * {
   padding: 0;
@@ -14,6 +15,7 @@
 
 body {
   font-family: HKGrotesk-Medium;
+  padding-top: 4rem;
 }
 
 .error-message {
@@ -23,4 +25,12 @@ body {
 a {
   text-decoration: none;
   color: black;
+}
+
+.welcome-page, .signin-section, .signup-section {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
