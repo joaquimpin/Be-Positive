@@ -10,6 +10,10 @@ const bcryptSalt = 10;
 const path = require('path');
 const routeAvatarPictures = '../images/profileimages/';
 const multer = require('multer');
+const mongoose = require('mongoose');
+
+
+
 const storage = multer.diskStorage({
 	destination: function (req, file, callback) {
 		callback(null, './public/images/profileimages');
@@ -87,12 +91,13 @@ router.get('/record/like/:id', async (req, res, next) => {
 router.get('/edit', (req, res, next) => {
 	User.findById(req.session.currentUser._id).then(response => {
 
-		let { username, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday } = response;
+		let { username, _id, name, lastName, password: hashPass, email, profession, country, pictureOfUser, birthday } = response;
 		stringBirthday = new Date(birthday);
 		stringBirthday = stringBirthday.getFullYear().toString() + '-' + (stringBirthday.getMonth() + 1).toString().padStart(2, 0) + '-' + stringBirthday.getDate().toString().padStart(2, 0);
 		let objectProfession = findSelectedInArray(arrayProfession, profession);
 		let objectCountries = findSelectedInArray(arrayCountries, country);
 		res.render('private/edituser', {
+			_id,
 			job: objectProfession,
 			countries: objectCountries,
 			username,
@@ -194,5 +199,32 @@ router.get('/likes/:id', (req, res) => {
 		})
 });
 
+router.get('/delete', (req, res) => {
+	User.findById(req.session.currentUser._id)
+
+		.then(result => {
+			res.render('private/deleteaccount', { result })
+		})
+})
+
+
+router.post('/confirmdelete', async (req, res, next) => {
+	if (req.body.username === req.session.currentUser.username) {
+		let records = await Record.deleteMany({ owner: req.session.currentUser._id })
+		let user = await User.deleteOne({ _id: req.session.currentUser._id })
+		req.session.destroy()
+		console.log(records, user)
+		res.render('private/deleted')
+
+
+	} else {
+		User.findById(req.session.currentUser._id)
+			.then(result => {
+				res.render('private/deleteaccount', { result, errorMessage: "confirm username not valid" }
+				)
+			})
+	}
+})
 
 module.exports = router;
+

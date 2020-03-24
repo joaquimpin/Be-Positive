@@ -5,3 +5,4 @@ node_modules/
 .vscode
 /public/stylesheets/style.css
 /public/stylesheets/style.css.map
+public/

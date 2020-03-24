@@ -1,0 +1,13 @@
+<div>
+    <h1>{{result.username}}</h1>
+    <p>Are you sure to delete the account?</p>
+    <p>this action is irreversible.</p>
+    <p>type your username to confirm the deletion</p>
+    <form id="delete" action="/private/confirmdelete" method="post">
+        <input type="text" name="username" required placeholder="😰"><br>
+        <button type="submit">Remove account</button>
+    </form>
+    <form method="get" action="/private/profile">
+        <button type="submit">Back to account</button>
+    </form>
+</div>
