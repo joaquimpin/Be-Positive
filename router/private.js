@@ -33,7 +33,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/wall', (req, res) => {
-	Record.find({}).populate('owner').sort({ createdAt: -1 })
+	Record.find({ public: true }).populate('owner').sort({ createdAt: -1 })
 		.then((result) => {
 			res.render('./private/wall', { result, user: req.session.currentUser, image: true, wall: false });
 		})
@@ -56,6 +56,7 @@ router.get('/add-comment', (req, res) => {
 
 
 router.post('/add-comment', (req, res, next) => {
+
 	if (req.body.rating === '') {
 		res.render('private/add-comment', { errorMessage: 'Please, rate your day' });
 		return;
@@ -64,10 +65,18 @@ router.post('/add-comment', (req, res, next) => {
 		res.render('private/add-comment', { errorMessage: 'Please, write a positive statement' });
 		return;
 	}
+	let public = true
+	if (req.body.public != "public") {
+		public = false
+
+	}
+	console.log(req.body.private)
+
 	const record = {
 		text: req.body.text,
 		owner: req.session.currentUser._id,
 		rate: req.body.rating,
+		public: public
 	};
 	Record.create(record)
 		.then(() => {

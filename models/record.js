@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const recordSchema = new Schema({
-		text: {type: String, required: true},
-		rate: Number,
-		like: [{type: Schema.Types.ObjectId, ref: 'User'}],
-		owner: {type: Schema.Types.ObjectId, ref: 'User'},
-	},
+	text: { type: String, required: true },
+	rate: Number,
+	like: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+	owner: { type: Schema.Types.ObjectId, ref: 'User' },
+	public: { type: Boolean, default: true }
+},
 	{
-		timestamps: {createdAt: 'createdAt', updatedAt: 'updatedAt'}
+		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 	}
 );
 

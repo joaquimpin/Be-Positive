@@ -10,16 +10,18 @@
         </div>
     </div>
     <form action="/private/add-comment" method="post">
-        <input type="number" name="rating" id="rating"/>
+        <input type="number" name="rating" id="rating" />
         <div>
             <h2>Write your positive achievement</h2>
-            <input type="text" name="text"/>
+            <input type="text" name="text" />
         </div>
+        <input type="checkbox" value="public" name="public" checked id="private">
+        <label for="public">Public record?</label><br>
         <button type="submit">Share</button>
         <a href="./wall" class="cancel-button">Cancel</a>
     </form>
 </section>
 
 {{#if errorMessage}}
-    <div class="error-message">{{ errorMessage }}</div>
+<div class="error-message">{{ errorMessage }}</div>
 {{/if}}
