@@ -213,7 +213,7 @@ router.get('/delete', (req, res) => {
 		.then(result => {
 			res.render('private/deleteaccount', {result})
 		})
-})
+});
 
 
 router.post('/confirmdelete', async (req, res, next) => {
@@ -232,7 +232,12 @@ router.post('/confirmdelete', async (req, res, next) => {
 				)
 			})
 	}
-})
+});
+
+
+router.get('/edit', (req, res) => {
+	res.render('private/edit')
+});
 
 module.exports = router;
 
