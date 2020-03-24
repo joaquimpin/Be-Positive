@@ -1,0 +1,68 @@
+.signin-section {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(132deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .close {
+    position: fixed;
+    right: 15px;
+    top: 15px;
+    font-size: 2rem;
+  }
+
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .inputs {
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 1px 1px 1px 1px;
+    margin-bottom: 1rem;
+    font-size: 36px;
+  }
+
+  .box {
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .signin-button {
+    font-size: 16px;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: transparent;
+    color: white;
+    font-weight: 900;
+    border: 1px solid white;
+  }
+
+  p {
+    color: white;
+  }
+
+  .sumbit-signin{
+    color: white;
+    border-bottom: 1px solid white;
+  }
+}
+
+
+
+
