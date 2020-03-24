@@ -1,4 +1,4 @@
-.signin-section {
+.signin-section, .signup-section {
   width: 100vw;
   height: 100vh;
   background: linear-gradient(132deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
@@ -42,7 +42,7 @@
     margin-bottom: 1rem;
   }
 
-  .signin-button {
+  .signin-button, .create-button {
     font-size: 16px;
     border-radius: 6px;
     padding: 1rem;
@@ -57,12 +57,33 @@
     color: white;
   }
 
-  .sumbit-signin{
+  .sumbit-signin, .create-button {
     color: white;
     border-bottom: 1px solid white;
   }
 }
 
+.signup-section {
+  select {
+    max-height: 20vh;
+    max-width: 56vw;
+    border-radius: 12px;
+    background-color: white;
+    padding: 1rem;
+    font-size: 14px;
+    box-shadow: 1px 1px 1px 1px;
+    margin-bottom: 6px;
+
+  }
+
+  input {
+    border: 1px solid black;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 1px 1px 1px 1px;
+    font-size: 14px;
+  }
+}
 
 
 
