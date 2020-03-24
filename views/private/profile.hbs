@@ -3,24 +3,25 @@
     <div class="title">
         <img class="formPicture" src="/images/profileimages/{{user.pictureOfUser}}" alt="User profile image"
              srcset=""><br>
-        <a href="/private/edit"><i class="fas fa-user-edit"></i></a>
+        <a class="edit-pencil" href="/private/edit"><i class="fas fa-user-edit"></i></a>
 
     </div>
-    <p> Name:{{user.name}} </p>
-    <p> Username:{{user.username}} </p>
-    <p> Lastname:{{user.lastName}} </p>
-    <p> Email:{{user.email}} </p>
-    <p> Birthday:{{ formatDate user.birthday  day="numeric" month="long" year="numeric" }}</p>
-    <p> Profession:{{user.profession}}</p>
-    <p> country:{{user.country}} </p>
-
+    <div class="profile-info">
+        <p><span>Name: </span>{{user.name}} </p>
+        <p><span>Username: </span>{{user.username}} </p>
+        <p><span>Lastname: </span>{{user.lastName}} </p>
+        <p><span>Email: </span>{{user.email}} </p>
+        <p><span>Birthday: </span>{{ formatDate user.birthday  day="numeric" month="long" year="numeric" }}</p>
+        <p><span>Profession: </span>{{user.profession}}</p>
+        <p><span>Country: </span>{{user.country}} </p>
+    </div>
     {{#each record}}
         <div class="record">
             <div class="header">
                 <img src="/images/profileimages/{{ this.owner.pictureOfUser }}" alt="avatar"/>
-                <div>{{ this.owner.username }}</div>
+                <div class="username">{{ this.owner.username }}</div>
                 {{#unless this.public}}
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-lock lock"></i>
                 {{/unless}}
             </div>
             <p class="content">{{this.text}}</p>
