@@ -210,11 +210,11 @@ router.get('/delete', (req, res) => {
 
 router.post('/confirmdelete', async (req, res, next) => {
 	if (req.body.username === req.session.currentUser.username) {
-		let records = await Record.deleteMany({ owner: req.session.currentUser._id })
-		let user = await User.deleteOne({ _id: req.session.currentUser._id })
-		req.session.destroy()
-		console.log(records, user)
-		res.render('private/deleted')
+		let records = await Record.deleteMany({ owner: req.session.currentUser._id });
+		let user = await User.deleteOne({ _id: req.session.currentUser._id });
+		req.session.destroy();
+		console.log(records, user);
+		res.render('private/deleted');
 
 
 	} else {
