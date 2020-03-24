@@ -6,6 +6,7 @@
 @import "navbar";
 @import "rate";
 @import "auth";
+@import "profile";
 
 * {
   padding: 0;
@@ -14,6 +15,7 @@
 
 body {
   font-family: HKGrotesk-Medium;
+  padding-top: 4rem;
 }
 
 .error-message {
