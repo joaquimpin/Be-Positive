@@ -4,6 +4,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
+const favicon = require('serve-favicon')
 const hbs = require('hbs');
 const hbsIntl = require('handlebars-intl');
 const mongoose = require('mongoose');
@@ -73,7 +74,7 @@ const indexRouter = require('./router/index.js');
 const authRouter = require('./router/auth.js');
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-
+app.use(favicon(path.join(__dirname, 'public/images', 'favicon.png')))
 
 app.use((req, res, next) => {
 	if (req.session.currentUser) {
