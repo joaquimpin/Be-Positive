@@ -1,10 +1,52 @@
 .data {
-  //padding-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 18px;
 
   .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     img {
       width: 10rem;
-      border-radius: 46px;
+      border-radius: 50%;
+      box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.75);
+    }
+
+    .edit-pencil {
+      margin-top: 8rem;
+    }
+  }
+
+  .profile-info {
+    width: 100%;
+    margin-bottom: 2rem;
+
+    & > * {
+      margin-bottom: 0.5rem;
+    }
+
+
+    span {
+      font-weight: 900;
     }
   }
 }
+
+.username {
+  flex: 1;
+}
+
+.lock {
+  margin-right: 14rem;
+}
+
+.record {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1.0);
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
