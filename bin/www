@@ -75,10 +75,23 @@ io.sockets.on('connection', function (socket) {
   // when the client emits 'sendchat', this listens and executes
   socket.on('sendchat', function (data) {
     //console.log(socket.room, socket.username, data)
-    Chat.create({ chatId: socket.room, sender: socket.username, message: data })
+    Chat.create({ chatId: socket.room, userId: socket.username, message: data })
     // we tell the client to execute 'updatechat' with 2 parameters
     io.sockets.in(socket.room).emit('updatechat', socket.username, data);
   });
+
+  socket.on("readmessages", function (data) {
+    console.log("fjalskdjfalskdfjadlsñkfjasdlñkfajsdlñfkajslkjs")
+    Chat.find({ chatId: data[0] })
+      .then((x) => {
+
+        io.sockets.emit(data[1], x)
+        console.log("readmessages messages-->", data[1], x)
+
+        // socket.broadcast.to(newroom).emit('updatechat', socket.username, data)
+      })
+  })
+
 
   socket.on('switchRoom', function async(array) {
     let newroom = array[0]
@@ -88,18 +101,18 @@ io.sockets.on('connection', function (socket) {
     socket.leave(socket.room);
     // join new room, received as function parameter
     socket.join(newroom);
-    socket.emit('updatechat', 'SERVER', 'you have connected to ' + name);
+    //  socket.emit('updatechat', 'SERVER', 'you have connected to ' + name);
     // sent message to OLD room
-    socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username + ' has left this room');
+    //socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username + ' has left this room');
     // update socket session room title
     socket.room = newroom;
-    socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username + ' has joined this room');
+    // socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username + ' has joined this room');
     console.log(newroom)
     Chat.find({ chatId: newroom })
       .then((x) => {
         x.forEach((y) => {
-          io.sockets.in(y.chatId).emit('updatechat', y.sender, y.message)
-          console.log("updatechat messages-->", y.chatId, y.sender, y.message)
+          //io.sockets.in(y.chatId).emit('updatechat', y.userId, y.message)
+          //console.log("updatechat messages-->", y.chatId, y.userId, y.message)
         })
         // socket.broadcast.to(newroom).emit('updatechat', socket.username, data)
       })
@@ -122,57 +135,6 @@ io.sockets.on('connection', function (socket) {
 
 
 });
-
-
-
-
-
-
-
-
-
-//https://socket.io/docs/
-//recives message
-//generate classroms
-
-// io.on('connection', function (socket) {
-//   let rooms = {}
-//   socket.on('join', function (data) {
-//     socket.join(data.room); // We are using room of socket io
-
-//     rooms.push()
-//     io.sockets.in(data.room).emit('new_msg', { msg: 'hello' })
-//   })
-//   socket.on("joaquimtotest", function (msg) {
-//     console.log(msg)
-//   })
-// })
-// console.log("message from:", msg.sender, " to:", msg.reciver, "content:", msg.message);
-
-
-// sends message to users
-// io.on('connection', function (socket) {
-//   socket.on('hola', function (msg) {
-//     io.emit('hola', msg);
-//   });
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

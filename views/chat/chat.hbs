@@ -2,18 +2,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
     var socket = io.connect(window.location.host);
+    let idreadmessages = String(Math.floor(Math.random() * 100000000000))
+
     let arrayMyRooms = JSON.parse(("{{ chat }}").split("&quot;").join("\""))
-    console.log()
     // on connection to server, ask for user's name with an anonymous callback
     socket.on('connect', function () {
         // call the server-side function 'adduser' and send one parameter (value of prompt)
         socket.emit('adduser', "{{ response._id }}");
+
     });
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
     socket.on('updatechat', function (username, data) {
         $('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
     });
+
 
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
     socket.on('updaterooms', function (rooms, current_room) {
@@ -38,7 +41,20 @@
 
         });
         $('#conversation').empty()
+        socket.emit("readmessages", [current_room, idreadmessages])
     });
+    socket.on(idreadmessages, function (array) {
+        $('#conversation').empty()
+
+        console.log(array)
+        array.forEach((message) => {
+            console.log("data-->", message.userId, message.message)
+            $('#conversation').append('<b>' + message.userId + ':</b> ' + message.message + '<br>');
+
+        })
+
+    })
+
 
     function switchRoom(room) {
         let actualroom
