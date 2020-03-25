@@ -81,12 +81,10 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on("readmessages", function (data) {
-    console.log("fjalskdjfalskdfjadlsñkfjasdlñkfajsdlñfkajslkjs")
     Chat.find({ chatId: data[0] })
       .then((x) => {
 
         io.sockets.emit(data[1], x)
-        console.log("readmessages messages-->", data[1], x)
 
         // socket.broadcast.to(newroom).emit('updatechat', socket.username, data)
       })
@@ -96,7 +94,6 @@ io.sockets.on('connection', function (socket) {
   socket.on('switchRoom', function async(array) {
     let newroom = array[0]
     let name = array[1]
-    console.log(array)
     // leave the current room (stored in session)
     socket.leave(socket.room);
     // join new room, received as function parameter
@@ -107,7 +104,6 @@ io.sockets.on('connection', function (socket) {
     // update socket session room title
     socket.room = newroom;
     // socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username + ' has joined this room');
-    console.log(newroom)
     Chat.find({ chatId: newroom })
       .then((x) => {
         x.forEach((y) => {
@@ -124,7 +120,6 @@ io.sockets.on('connection', function (socket) {
   socket.on('disconnect', function () {
     // remove the username from global usernames list
     rooms.splice(rooms.indexOf(socket.username), 1)
-    console.log("rooms:" + rooms)
     delete usernames[socket.username];
     // update list of users in chat, client-side
     io.sockets.emit('updateusers', usernames);
