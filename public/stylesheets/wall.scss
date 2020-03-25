@@ -12,6 +12,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    .thumbs-up {
+      background: transparent;
+      border: none;
+    }
   }
 }
 
@@ -32,4 +37,8 @@
     border-radius: 50%;
     margin-right: 8px;
   }
+}
+
+.container {
+  padding: 0 14px;
 }
