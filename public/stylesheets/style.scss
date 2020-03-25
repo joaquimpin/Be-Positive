@@ -7,6 +7,7 @@
 @import "rate";
 @import "auth";
 @import "profile";
+@import "delete-account";
 
 * {
   padding: 0;
@@ -27,7 +28,7 @@ a {
   color: black;
 }
 
-.welcome-page, .signin-section, .signup-section {
+.welcome-page, .signin-section, .signup-section, .delete-account {
   position: fixed;
   top: 0;
   right: 0;
