@@ -8,6 +8,7 @@
 @import "auth";
 @import "profile";
 @import "delete-account";
+@import "deleted";
 
 * {
   padding: 0;
@@ -28,7 +29,7 @@ a {
   color: black;
 }
 
-.welcome-page, .signin-section, .signup-section, .delete-account {
+.welcome-page, .signin-section, .signup-section, .delete-account, .delete-confirmation {
   position: fixed;
   top: 0;
   right: 0;
