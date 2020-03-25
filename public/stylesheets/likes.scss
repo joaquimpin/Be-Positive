@@ -1,0 +1,16 @@
+.see-likes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+
+
+  h1 {
+    padding-bottom: 2rem;
+  }
+
+  .header {
+    margin-bottom: 1rem;
+  }
+}
