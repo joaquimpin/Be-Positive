@@ -69,12 +69,10 @@ app.use(session({
 }));
 
 app.locals.title = 'Be Positive';
-const chatRouter = require('./router/chat.js')
 const indexRouter = require('./router/index.js');
 const authRouter = require('./router/auth.js');
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/chat', chatRouter)
 app.use(favicon(path.join(__dirname, 'public/images', 'favicon.png')))
 
 app.use((req, res, next) => {
@@ -85,9 +83,10 @@ app.use((req, res, next) => {
 	}
 });
 
-
+const chatRouter = require('./router/chat.js')
 const privateRouter = require('./router/private.js');
 app.use('/private', privateRouter);
+app.use('/chat', chatRouter)
 
 
 module.exports = app;

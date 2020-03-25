@@ -1,7 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect(window.location.host);
     let arrayMyRooms = JSON.parse(("{{ chat }}").split("&quot;").join("\""))
     console.log()
     // on connection to server, ask for user's name with an anonymous callback
@@ -17,20 +17,15 @@
 
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
     socket.on('updaterooms', function (rooms, current_room) {
+        if (current_room === "General") {
+            switchRoom(arrayMyRooms[0].chatId)
+            return
+        }
         $('#rooms').empty();
         $.each(rooms, function (key, value) {
-            if (value == "General") {
-                if (value == current_room) {
-                    $('#rooms').append('<div>' + value + '</div>');
-                }
-                else {
-                    $('#rooms').append('<div><a href="#" onclick="switchRoom(\'' + value + '\')">' + value + '</a></div>');
-                }
-            }
-
             arrayMyRooms.map((room) => {
-
                 if (room.chatId == value) {
+
                     if (value == current_room) {
                         $('#rooms').append('<div>' + room.name + '</div>');
                     }
@@ -42,6 +37,7 @@
             })
 
         });
+        $('#conversation').empty()
     });
 
     function switchRoom(room) {
@@ -54,11 +50,6 @@
                 console.log(x.chatId)
                 actualroom = x.name
                 socket.emit('switchRoom', [room, actualroom]);
-                console.log("switching")
-            } else if (room === "General") {
-                actualroom = room
-                socket.emit('switchRoom', [room, actualroom]);
-                console.log("switching")
             }
         })
 
