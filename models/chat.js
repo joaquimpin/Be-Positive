@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const chatSchema = new Schema({
     sender: { type: Schema.Types.ObjectId, ref: 'User' },
-    reciver: { type: Schema.Types.ObjectId, ref: 'User' },
-    message: String
+    reciver: { type: Schema.Types.ObjectId, ref: 'User' }
 }, {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
 });

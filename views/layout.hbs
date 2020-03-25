@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta(charset="utf-8") />
 
 <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
@@ -8,11 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <script>
         function addLike(id) {
             fetch('/private/record/like/' + id)
-                    .then(() => document.location.reload())
+                .then(() => document.location.reload())
         }
 
         function rate(n) {
@@ -31,10 +32,10 @@
 
 <body>
 
-{{{body}}}
+    {{{body}}}
 
 
-{{!-- <script src="/javascripts/script.js"></script> --}}
+    {{!-- <script src="/javascripts/script.js"></script> --}}
 </body>
 
 </html>

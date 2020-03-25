@@ -6,8 +6,11 @@ const User = require('../models/user');
 
 router.get('/', (req, res) => {
   User.findById(req.session.currentUser._id)
+    
     .then(response => {
-      res.render('chat/chat', response)
+      console.log(response)
+      let chat = JSON.stringify(response.chat)
+      res.render('chat/chat', { response, chat })
 
     })
   // res.sendFile(path.join(__dirname, "../public/html/index.html"))
