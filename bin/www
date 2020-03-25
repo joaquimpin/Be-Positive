@@ -78,12 +78,15 @@ io.sockets.on('connection', function (socket) {
     io.sockets.in(socket.room).emit('updatechat', socket.username, data);
   });
 
-  socket.on('switchRoom', function (newroom) {
+  socket.on('switchRoom', function async(array) {
+    let newroom = array[0]
+    let name = array[1]
+    console.log(array)
     // leave the current room (stored in session)
     socket.leave(socket.room);
     // join new room, received as function parameter
     socket.join(newroom);
-    socket.emit('updatechat', 'SERVER', 'you have connected to ' + newroom);
+    socket.emit('updatechat', 'SERVER', 'you have connected to ' + name);
     // sent message to OLD room
     socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username + ' has left this room');
     // update socket session room title

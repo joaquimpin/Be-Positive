@@ -29,9 +29,8 @@
             }
 
             arrayMyRooms.map((room) => {
-                console.log(room.user)
 
-                if (room.chatId === value) {
+                if (room.chatId == value) {
                     if (value == current_room) {
                         $('#rooms').append('<div>' + room.name + '</div>');
                     }
@@ -46,7 +45,22 @@
     });
 
     function switchRoom(room) {
-        socket.emit('switchRoom', room);
+        let actualroom
+        console.log(arrayMyRooms)
+        console.log(room)
+        arrayMyRooms.map((x) => {
+            console.log(x)
+            if (x.chatId == room) {
+                console.log(x.chatId)
+                actualroom = x.name
+                socket.emit('switchRoom', [room, actualroom]);
+                console.log("switching")
+            } else if (room === "General") {
+                actualroom = room
+                socket.emit('switchRoom', [room, actualroom]);
+                console.log("switching")
+            }
+        })
 
     }
 
