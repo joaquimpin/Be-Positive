@@ -88,7 +88,6 @@ io.sockets.on('connection', function (socket) {
   socket.on("readmessages", function (data) {
     Chat.find({ chatId: data[0] }).populate('userId')
       .then((x) => {
-        console.log(x)
         // socket.broadcast.to(newroom).emit('updatechat', socket.username, data)
         io.sockets.emit(data[1], x)
 

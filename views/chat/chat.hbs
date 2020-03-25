@@ -47,10 +47,7 @@
     socket.on(idreadmessages, function (array) {
         $('#conversation').empty()
 
-        console.log(array)
         array.forEach((message) => {
-            console.log(arrayMyRooms)
-            console.log("data-->", message.usernamechat, message.message)
             let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">'
 
             $('#conversation').append(image + '<b>' + message.usernamechat + ':</b> ' + message.message + '<br>');
@@ -62,12 +59,8 @@
 
     function switchRoom(room) {
         let actualroom
-        console.log(arrayMyRooms)
-        console.log(room)
         arrayMyRooms.map((x) => {
-            console.log(x)
             if (x.chatId == room) {
-                console.log(x.chatId)
                 actualroom = x.name
                 socket.emit('switchRoom', [room, actualroom]);
             }
