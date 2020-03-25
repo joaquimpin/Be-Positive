@@ -1,7 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
-    var socket = io.connect("ironhack.ragulion.cat");
+    var socket = io.connect(window.location.host);
     let idreadmessages = String(Math.floor(Math.random() * 100000000000)) //"token session xapu... para recepcion de mensajes del servidor (recuperacion de datos de xats no leidos"
     let urlImages = "/images/profileimages/" //ruta de imagen
     let arrayMyRooms = JSON.parse(("{{ chat }}").split("&quot;").join("\"")) //array de xats disponibles para un usuario.
