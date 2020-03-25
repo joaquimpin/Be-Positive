@@ -1,0 +1,58 @@
+.rate-comment {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(132deg, #22c1c3 0%, #fdbb2d 100%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 0;
+  text-align: -webkit-center;
+  position: absolute;
+  top: 0;
+
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+  }
+
+  h1, h2 {
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    text-decoration: underline;
+    margin-top: 5rem;
+    padding-bottom: 1rem;
+  }
+
+  .faces {
+    padding-bottom: 3rem;
+  }
+
+  .text-input {
+    width: 295px;
+    height: 185px;
+    font-size: 12px;
+    border-radius: 6px;
+    padding: 0.5rem;
+    background: transparent;
+    color: black;
+    border: 1px solid black;
+    margin-bottom: 1rem;
+    box-shadow: 1px 1px 1px 1px;
+  }
+
+  button {
+    background: transparent;
+    border-radius: 6px;
+    padding: 0.2rem;
+    margin-bottom: 6px;
+  }
+
+  .cancel-button {
+    border-bottom: 1px solid black;
+  }
+}
+
+
+
