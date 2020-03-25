@@ -74,19 +74,24 @@ io.sockets.on('connection', function (socket) {
 
   // when the client emits 'sendchat', this listens and executes
   socket.on('sendchat', function (data) {
-    //console.log(socket.room, socket.username, data)
-    Chat.create({ chatId: socket.room, userId: socket.username, message: data })
-    // we tell the client to execute 'updatechat' with 2 parameters
-    io.sockets.in(socket.room).emit('updatechat', socket.username, data);
+    //console.log(socket.room, socket.username, data[0])
+    let urlimages = "/images/profileimages/" 
+    User.findOne({ username: socket.username }).then((resp) => {
+      Chat.create({ chatId: socket.room, usernamechat: socket.username, message: data[0], userId: resp._id })
+      // we tell the client to execute 'updatechat' with 2 parameters
+      io.sockets.in(socket.room).emit('updatechat', socket.username, data[0], data[1]);
+    }
+    )
+
   });
 
   socket.on("readmessages", function (data) {
-    Chat.find({ chatId: data[0] })
+    Chat.find({ chatId: data[0] }).populate('userId')
       .then((x) => {
-
+        console.log(x)
+        // socket.broadcast.to(newroom).emit('updatechat', socket.username, data)
         io.sockets.emit(data[1], x)
 
-        // socket.broadcast.to(newroom).emit('updatechat', socket.username, data)
       })
   })
 
@@ -107,8 +112,8 @@ io.sockets.on('connection', function (socket) {
     Chat.find({ chatId: newroom })
       .then((x) => {
         x.forEach((y) => {
-          //io.sockets.in(y.chatId).emit('updatechat', y.userId, y.message)
-          //console.log("updatechat messages-->", y.chatId, y.userId, y.message)
+          //io.sockets.in(y.chatId).emit('updatechat', y.usernamechat, y.message)
+          //console.log("updatechat messages-->", y.chatId, y.usernamechat, y.message)
         })
         // socket.broadcast.to(newroom).emit('updatechat', socket.username, data)
       })

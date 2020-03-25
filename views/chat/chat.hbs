@@ -2,9 +2,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script>
     var socket = io.connect(window.location.host);
-    let idreadmessages = String(Math.floor(Math.random() * 100000000000))
-
-    let arrayMyRooms = JSON.parse(("{{ chat }}").split("&quot;").join("\""))
+    let idreadmessages = String(Math.floor(Math.random() * 100000000000)) //"token session xapu... para recepcion de mensajes del servidor (recuperacion de datos de xats no leidos"
+    let urlImages = "/images/profileimages/" //ruta de imagen
+    let arrayMyRooms = JSON.parse(("{{ chat }}").split("&quot;").join("\"")) //array de xats disponibles para un usuario.
     // on connection to server, ask for user's name with an anonymous callback
     socket.on('connect', function () {
         // call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -13,8 +13,9 @@
     });
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
-    socket.on('updatechat', function (username, data) {
-        $('#conversation').append('<b>' + username + ':</b> ' + data + '<br>');
+    socket.on('updatechat', function (username, data, pictureOfUser) {
+        let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">'
+        $('#conversation').append(image + '<b>' + username + ':</b> ' + data + '<br>');
     });
 
 
@@ -48,8 +49,11 @@
 
         console.log(array)
         array.forEach((message) => {
-            console.log("data-->", message.userId, message.message)
-            $('#conversation').append('<b>' + message.userId + ':</b> ' + message.message + '<br>');
+            console.log(arrayMyRooms)
+            console.log("data-->", message.usernamechat, message.message)
+            let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">'
+
+            $('#conversation').append(image + '<b>' + message.usernamechat + ':</b> ' + message.message + '<br>');
 
         })
 
@@ -75,10 +79,10 @@
     $(function () {
         // when the client clicks SEND
         $('#datasend').click(function () {
-            var message = $('#data').val();
+            var msge = $('#data').val();
             $('#data').val('');
             // tell server to execute 'sendchat' and send along one parameter
-            socket.emit('sendchat', message);
+            socket.emit('sendchat', [msge, "{{ response.pictureOfUser }}"]);
         });
 
         // when the client hits ENTER on their keyboard
@@ -97,6 +101,7 @@
 </div>
 <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
     <h1>nombre: {{response.name}}</h1>
+
     <input id="data" style="width:200px;" />
     <input type="button" id="datasend" value="send" />
 

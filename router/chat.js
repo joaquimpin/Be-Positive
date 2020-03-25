@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
   }
   getData().then(data => {
     console.log(data)
+
     let chat = JSON.stringify(data)
     res.render('chat/chat', { response, chat })
   })

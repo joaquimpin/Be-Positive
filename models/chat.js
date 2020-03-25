@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const chatSchema = new Schema({
-    userId: String,
+    usernamechat: String,
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
     message: String,
     chatId: String
 }, {
