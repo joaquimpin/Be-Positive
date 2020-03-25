@@ -1,4 +1,4 @@
-<section>
+<section class="rate-comment">
     <div>
         <h1>How was your day?</h1>
         <div class="faces">
@@ -13,10 +13,12 @@
         <input type="number" name="rating" id="rating" />
         <div>
             <h2>Write your positive achievement</h2>
-            <input type="text" name="text" />
+            <textarea class="text-input" type="text" name="text"></textarea>
         </div>
-        <input type="checkbox" value="public" name="public" checked id="private">
-        <label for="public">Public record?</label><br>
+        <label class="checkbox">Uncheck for private
+            <input class="check" type="checkbox" value="public" name="public" checked id="private">
+            <span class="checkmark"></span>
+        </label>
         <button type="submit">Share</button>
         <a href="./wall" class="cancel-button">Cancel</a>
     </form>
