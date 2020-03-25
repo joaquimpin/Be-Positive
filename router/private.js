@@ -130,16 +130,19 @@ router.post('/uploadAvatar', (req, res, next) => {
 
 		let actualPictureName;
 		User.findById(req.session.currentUser._id)
-			.then(response => actualPictureName = response.pictureOfUser);
-		User.findByIdAndUpdate(req.session.currentUser._id, { pictureOfUser: req.file.filename }, { new: true })
-			.then((respuesta) => {
-				if (actualPictureName !== 'default.png') {
-					fs.unlinkSync(path.join(__dirname, '/../', '/public/images/profileimages/', actualPictureName));
-				}
-				req.session.currentUser = respuesta;
-				res.redirect('edit');
-			}
-			)
+			.then(response => {
+				actualPictureName = response.pictureOfUser
+				User.findByIdAndUpdate(req.session.currentUser._id, { pictureOfUser: req.file.filename }, { new: true })
+					.then((respuesta) => {
+						if (actualPictureName !== 'default.png') {
+							fs.unlinkSync(path.join(__dirname, '/../', '/public/images/profileimages/', actualPictureName));
+						}
+						req.session.currentUser = respuesta;
+						res.redirect('edit');
+					}
+					)
+			});
+
 	});
 
 
