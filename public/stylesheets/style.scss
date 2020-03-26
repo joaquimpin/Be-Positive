@@ -12,6 +12,7 @@
 @import "likes";
 @import "add-comment";
 @import "checkbox";
+@import "chat";
 @import "404";
 
 * {
@@ -33,11 +34,7 @@ a {
   color: black;
 }
 
-.welcome-page,
-.signin-section,
-.signup-section,
-.delete-account,
-.delete-confirmation {
+.welcome-page, .signin-section, .signup-section, .delete-account, .delete-confirmation {
   position: fixed;
   top: 0;
   right: 0;
@@ -45,8 +42,7 @@ a {
   left: 0;
 }
 
-input,
-input:active {
+input, input:active {
   outline: none;
 }
 

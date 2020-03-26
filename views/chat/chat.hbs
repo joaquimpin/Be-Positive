@@ -3,8 +3,8 @@
 <script>
     var socket = io.connect(window.location.host);
     let idreadmessages = String(Math.floor(Math.random() * 100000000000)) //"token session xapu... para recepcion de mensajes del servidor (recuperacion de datos de xats no leidos"
-    let urlImages = "/images/profileimages/" //ruta de imagen
-    let arrayMyRooms = JSON.parse(("{{ chat }}").split("&quot;").join("\"")) //array de xats disponibles para un usuario.
+    let urlImages = '/images/profileimages/' //ruta de imagen
+    let arrayMyRooms = JSON.parse(("{{ chat }}").split('&quot;').join('"')) //array de xats disponibles para un usuario.
     // on connection to server, ask for user's name with an anonymous callback
     socket.on('connect', function () {
         // call the server-side function 'adduser' and send one parameter (value of prompt)
@@ -14,58 +14,56 @@
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
     socket.on('updatechat', function (username, data, pictureOfUser) {
-        let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">'
+        let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">';
         $('#conversation').append(image + '<b>' + username + ':</b> ' + data + '<br>');
     });
 
 
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
     socket.on('updaterooms', function (rooms, current_room) {
-        if (current_room === "General") {
-            switchRoom(arrayMyRooms[0].chatId)
-            return
-        }
         $('#rooms').empty();
         $.each(rooms, function (key, value) {
             arrayMyRooms.map((room) => {
-                if (room.chatId == value) {
-
-                    if (value == current_room) {
-                        $('#rooms').append('<div>' + room.name + '</div>');
-                    }
-                    else {
-                        $('#rooms').append('<div><a href="#" onclick="switchRoom(\'' + value + '\')">' + room.name + '</a></div>');
-                    }
+                if (room.chatId === value) {
+                    $('#rooms').append('' +
+                            '<div>' +
+                            `<div class="avatar" style="background-image: url('/images/profileimages/${room.photo}')"></div>` +
+                            '<a href="#" onclick="switchRoom(\'' + value + '\')">' + room.name + '</a>' +
+                            '</div>');
                 }
-
             })
 
         });
-        $('#conversation').empty()
-        socket.emit("readmessages", [current_room, idreadmessages])
+        $('#conversation').empty();
+        socket.emit('readmessages', [current_room, idreadmessages])
     });
     socket.on(idreadmessages, function (array) {
-        $('#conversation').empty()
+        $('#conversation').empty();
 
         array.forEach((message) => {
-            let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">'
+            let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">';
 
-            $('#conversation').append(image + '<b>' + message.usernamechat + ':</b> ' + message.message + '<br>');
+            $('#conversation').append(
+            	`<div class="message">
+                    ${image}<div><b>${message.usernamechat}</b> ${message.message}
+                </div>`
+
+            );
 
         })
 
-    })
+    });
 
 
     function switchRoom(room) {
-        let actualroom
+        $('.name').addClass('chat-in');
+        let actualroom;
         arrayMyRooms.map((x) => {
-            if (x.chatId == room) {
-                actualroom = x.name
+            if (x.chatId === room) {
+                actualroom = x.name;
                 socket.emit('switchRoom', [room, actualroom]);
             }
         })
-
     }
 
     // on load of page
@@ -80,24 +78,33 @@
 
         // when the client hits ENTER on their keyboard
         $('#data').keypress(function (e) {
-            if (e.which == 13) {
+            if (e.which === 13) {
                 $(this).blur();
                 $('#datasend').focus().click();
             }
         });
+        $('#close').click(() => {
+            $('.name').removeClass('chat-in');
+        })
+
     });
 
+
 </script>
-<div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
-    <b>ROOMS</b>
+<div class="rooms">
+    <h1>Lobby</h1>
+    <div class="point-users">
+        <div class="available"></div>
+        <h2>Users available:</h2>
+    </div>
     <div id="rooms"></div>
 </div>
-<div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
-    <h1>nombre: {{response.name}}</h1>
 
-    <input id="data" style="width:200px;" />
-    <input type="button" id="datasend" value="send" />
-
+<div class="name">
+    <i id="close" class="fas fa-times"></i>
     <div id="conversation"></div>
-
+    <div class="send-message">
+        <input class="input" id="data"/>
+        <input class="send" type="button" id="datasend" value="send"/>
+    </div>
 </div>

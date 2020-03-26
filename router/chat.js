@@ -10,11 +10,11 @@ router.get('/', async (req, res) => {
 
   const anAsyncFunction = async obj => {
     let user = await User.findById(obj.user).populate("user");
-    return { name: user.name, chatId: obj.chatId }
-  }
+    return { name: user.name, chatId: obj.chatId, photo: user.pictureOfUser }
+  };
   const getData = async () => {
     return Promise.all(response.chat.map(item => anAsyncFunction(item)))
-  }
+  };
   getData().then(data => {
     console.log(data)
 
