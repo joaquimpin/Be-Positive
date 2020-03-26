@@ -69,7 +69,6 @@ app.use(session({
 }));
 
 app.locals.title = 'Be Positive';
-
 const indexRouter = require('./router/index.js');
 const authRouter = require('./router/auth.js');
 app.use('/', indexRouter);
@@ -84,10 +83,10 @@ app.use((req, res, next) => {
 	}
 });
 
-
+const chatRouter = require('./router/chat.js')
 const privateRouter = require('./router/private.js');
 app.use('/private', privateRouter);
-
+app.use('/chat', chatRouter)
 
 
 module.exports = app;

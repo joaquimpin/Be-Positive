@@ -85,10 +85,35 @@ router.post('/signup', async (req, res, next) => {
 
         const salt = bcrypt.genSaltSync(bcryptSalt);
         const hashPass = bcrypt.hashSync(password, salt);
-
         user = await User.create({ username, name, lastName, password: hashPass, email, profession, country });
-        req.session.currentUser = user;
-        res.redirect('/private/wall');
+        User.find({ _id: { $ne: user._id } })
+          .then((resp) => {
+            console.log()
+            if (resp.length === 0) {
+              req.session.currentUser = user;
+              res.redirect('/private/wall')
+            } else {
+              resp.forEach(userActual => {
+                let chatarray = []
+                let random = Math.floor(Math.random() * 1000000000000000000)
+                User.findByIdAndUpdate(userActual._id, { $push: { chat: { user: user.id, name: user.name, chatId: random } } }, { new: true })
+                  .then((resp) => {
+                    chatarray.push({ user: resp.id, name: resp.name, chatId: random })
+                    User.findByIdAndUpdate(user._id, { $push: { chat: chatarray } })
+                      .then(() => {
+                        req.session.currentUser = user;
+                        res.redirect('/private/wall')
+                      })
+                  }
+                  )
+              });
+            }
+
+          }
+
+          )
+
+
       } catch (e) {
         console.error(e);
         next(e);
