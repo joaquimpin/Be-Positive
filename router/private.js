@@ -33,7 +33,7 @@ router.get('/', (req, res, next) => {
 router.get('/wall', (req, res) => {
 	Record.find({ public: true }).populate('owner').sort({ createdAt: -1 })
 		.then((result) => {
-			res.render('./private/wall', { result, user: req.session.currentUser, image: true, wall: false });
+			res.render('./private/wall', { result, user: req.session.currentUser, image: true, wall: false, chat: true });
 		})
 		.catch(error => {
 			console.error('Error while publishing your comment', error);
