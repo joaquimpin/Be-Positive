@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 
 router.get('/', async (req, res) => {
-  response = await User.findById(req.session.currentUser._id)
+  response = await User.findById(req.session.currentUser._id);
 
 
   const anAsyncFunction = async obj => {
@@ -16,9 +16,9 @@ router.get('/', async (req, res) => {
     return Promise.all(response.chat.map(item => anAsyncFunction(item)))
   };
   getData().then(data => {
-    console.log(data)
+    console.log(data);
 
-    let chat = JSON.stringify(data)
+    let chat = JSON.stringify(data);
     res.render('chat/chat', { response, chat })
   })
 
