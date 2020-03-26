@@ -1,0 +1,66 @@
+{{> navbarPartial }}
+
+<div class="container">
+    <div class="formPicture">
+        <form action="/private/uploadAvatar" enctype="multipart/form-data" method="post">
+            <div class="avatar avatar-edit" style="background-image: url('/images/profileimages/{{pictureOfUser}}')"></div><br>
+            <input style="display: none;"
+                   onchange="onChange(event)"
+                   type="file"
+                   name="pictureOfUser"
+                   id="pictureOfUser"
+                   accept="image/png, image/jpg"/><br>
+
+            <div class="chose-file">
+                <button onclick="fakeClick(event)">Choose file</button>
+                <span id="fake-file-name">Not file selected</span>
+            </div>
+
+            <button class="upload" type="submit">Upload avatar</button>
+        </form>
+    </div>
+    <div class="formData">
+        <form id="data" action="/private/edit" method="post">
+
+            <input class="details" type="text" name="username" required placeholder="Username" value={{username}}><br>
+            <input class="details" type="text" name="name" required placeholder="Name" value={{name}}><br>
+            <input class="details" type="text" name="lastName" required placeholder="Lastname" value={{lastName}}><br>
+            <input class="details" type="email" name="email" disabled required placeholder="E-mail" value={{email}}><br>
+            <input class="details" type="date" name="birthday" value={{stringBirthday}}><br>
+            <input class="details" type="password" name="password" placeholder="********"><br>
+            <input class="details" type="password" name="repeatPassword" placeholder="********"><br>
+
+            <select name="country">
+                {{#each countries}}
+                <option {{#if this.status}}selected {{/if}}value="{{this.element}}">{{this.element}}</option>
+                {{/each}}
+            </select><br>
+            <select name="profession">
+                {{#each job}}
+                <option {{#if this.status}}selected {{/if}}value="{{this.element}}">{{this.element}}</option>
+                {{/each}}
+            </select><br>
+            <button class="select save-changes" type="submit">Save Changes</button>
+
+        </form>
+        <form method="get" action="/private/delete">
+            <button class="select" type="submit">Delete account</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+    const fakeClick = (e) => {
+    	e.preventDefault();
+    	document.getElementById('pictureOfUser').click();
+    };
+
+    const onChange = (e) => {
+    	console.log('onchange ', e.target.value);
+    	const file = e.target.value;
+    	const fileName = file.substr(file.lastIndexOf('\\') + 1);
+        document.getElementById('fake-file-name').innerText = fileName.length > 24 ? fileName.substr(0, 24) + '...' : fileName;
+    };
+</script>

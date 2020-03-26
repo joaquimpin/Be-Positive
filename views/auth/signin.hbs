@@ -1,0 +1,32 @@
+{{#if errorMessage}}
+<p class="error-message">
+    {{ errorMessage }}
+</p>
+{{/if}}
+<div class="signin-section">
+    <a class="close" href="/"><i class="fas fa-times"></i></a>
+    <div class="form">
+        <form action="/auth/signin" method="post">
+            <div class="inputs">
+                <div>
+                    <label for="email-input"> Email </label><br>
+                    <input class="box" type="email" name="email" id="email-input" placeholder="Email">
+                </div>
+
+                <div>
+                    <label for="password-input"> Password </label><br>
+                    <input class="box" type="password" name="password" id="password-input" placeholder="••••••••••••">
+                </div>
+            </div>
+
+            <button class="signin-button" type="submit"> Sign In</button>
+        </form>
+
+        <p>
+            Or
+            <a class="sumbit-signin" href="/auth/signup">
+                Create an account.
+            </a>
+        </p>
+    </div>
+</div>

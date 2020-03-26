@@ -1,0 +1,56 @@
+@import "font";
+@import "landing";
+@import "partial";
+@import "wall";
+@import "edituser";
+@import "navbar";
+@import "rate";
+@import "auth";
+@import "profile";
+@import "delete-account";
+@import "deleted";
+@import "likes";
+@import "add-comment";
+@import "checkbox";
+@import "chat";
+@import "404";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: HKGrotesk-Medium;
+  padding-top: 6rem;
+}
+
+.error-message {
+  color: darkred;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.welcome-page, .signin-section, .signup-section, .delete-account, .delete-confirmation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+
+input, input:active {
+  outline: none;
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

@@ -1,0 +1,44 @@
+.record {
+  margin-bottom: 1rem;
+  padding: 8px;
+  width: 100%;
+
+  .content {
+    font-size: 1.5rem;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .thumbs-up {
+      background: transparent;
+      border: none;
+    }
+  }
+}
+
+.header {
+  font-family: HKGrotesk-Bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+
+  & :first-child {
+    margin-right: 8px;
+  }
+
+  img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+}
+
+.container {
+  padding: 0 14px;
+}

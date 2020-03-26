@@ -1,0 +1,165 @@
+.rooms {
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+  overflow: -moz-scrollbars-vertical;
+
+  .point-users {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 42px;
+    text-decoration: underline;
+    margin-bottom: 3rem;
+    margin-left: 50%;
+  }
+
+  .available {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: #4CAF50;
+    margin-right: 5px;
+    box-shadow: 0 0 14px 1px #4CAF50;
+    margin-left: 0.5rem;
+  }
+
+  h2 {
+    font-size: 14px;
+    color: #4CAF50;
+  }
+}
+
+.name {
+  display: none;
+  padding: 4rem 0;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  background: linear-gradient(132deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+
+
+  .fa-times {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+  }
+
+  .send-message {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    .input {
+      border: 1px solid black;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 1px 1px 1px 1px;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .send {
+      color: white;
+      border-bottom: 1px solid white;
+      font-size: 16px;
+      border-radius: 6px;
+      padding: 1rem 0.5rem;
+      background: transparent;
+      font-weight: 900;
+    }
+  }
+}
+
+
+#conversation {
+  overflow: auto;
+  max-height: 84%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 0 12px;
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8px;
+
+      span {
+        font-family: HKGrotesk-Bold;
+      }
+    }
+
+    & > p {
+      background: floralwhite;
+      padding: 5px;
+      border-radius: 10px;
+    }
+  }
+
+  .own-message {
+    align-items: flex-end;
+    align-self: flex-end;
+    text-align: right;
+
+    & > div {
+      flex-direction: row-reverse;
+    }
+
+    img {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .received-message {
+    align-items: flex-start;
+    align-self: flex-start;
+    text-align: left;
+
+    img {
+      margin-right: 0.5rem;
+    }
+  }
+
+  img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+  }
+}
+
+
+#rooms {
+  div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 0.5rem;
+  }
+
+  .avatar {
+    margin-right: 0.5rem;
+  }
+}

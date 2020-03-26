@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta(charset="utf-8") />
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/stylesheets/flash.css">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+
+</head>
+
+<body>
+
+
+    {{{body}}}
+
+    <script>
+        function addLike(id) {
+            fetch('/private/record/like/' + id)
+                .then(() => document.location.reload())
+        }
+
+        function rate(n) {
+            document.getElementById('rating').value = n;
+            let faces = document.getElementsByClassName('fas');
+            Array.from(faces).forEach((e) => {
+                if (e.id === n.toString()) {
+                    e.setAttribute('data-selected', 'true');
+                } else {
+                    e.setAttribute('data-selected', 'false');
+                }
+            })
+        }
+
+
+
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="/js/flash.min.js"></script>
+    <script src="/js/flash.jquery.min.js"></script>
+    <script>
+
+        let mensaje = "{{ errorMessage }}"
+        if (mensaje != "") {
+            mensajeError(window, document, jQuery, "error", mensaje);
+        }
+
+
+        function mensajeError(window, document, $, type, message) {
+
+            'use strict';
+
+            //window.FlashMessage.addCustomVerbs('forbidden', 'disabled');
+
+
+            switch (type) {
+                case "success":
+                    window.FlashMessage.success(message, {
+                        timeout: 8000,
+                        interactive: false,
+                        progress: true,
+                        theme: 'dark'
+                    });
+                    break;
+                case "warning":
+
+                    window.FlashMessage.warning(message, {
+                        timeout: 5000,
+                        progress: true,
+                        onClick: () => alert(message)
+                    });
+                    break;
+                case "error":
+
+                    window.FlashMessage.error(message, {
+                        timeout: 7000,
+                        progress: true
+                    });
+                    break;
+                case "info":
+                    window.FlashMessage.info(message, {
+                        timeout: 8000,
+                        progress: true
+                    });
+                    break;
+
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script>
+    var socket = io.connect(window.location.host);
+    let idreadmessages = String(Math.floor(Math.random() * 100000000000)) //"token session xapu... para recepcion de mensajes del servidor (recuperacion de datos de xats no leidos"
+    let urlImages = '/images/profileimages/' //ruta de imagen
+    let arrayMyRooms = JSON.parse(("{{ chat }}").split('&quot;').join('"')) //array de xats disponibles para un usuario.
+    // on connection to server, ask for user's name with an anonymous callback
+    socket.on('connect', function () {
+        // call the server-side function 'adduser' and send one parameter (value of prompt)
+        socket.emit('adduser', "{{ response._id }}");
+
+    });
+
+    // listener, whenever the server emits 'updaterooms', this updates the room the client is in
+    socket.on('updaterooms', function (rooms, current_room) {
+        $('#rooms').empty();
+        $.each(rooms, function (key, value) {
+            arrayMyRooms.map((room) => {
+                if (room.chatId === value) {
+                    $('#rooms').append('' +
+                            '<div>' +
+                            `<div class="avatar" style="background-image: url('/images/profileimages/${room.photo}')"></div>` +
+                            '<a href="#" onclick="switchRoom(\'' + value + '\')">' + room.name + '</a>' +
+                            '</div>');
+                }
+            })
+
+        });
+        $('#conversation').empty();
+        socket.emit('readmessages', [current_room, idreadmessages])
+    });
+
+    // listener, whenever the server emits 'updatechat', this updates the chat body
+    socket.on('updatechat', function (username, data, pictureOfUser) {
+        const conversation = $('#conversation');
+        const owner = conversation.attr('data-owner');
+        const isOwner = owner === username;
+        let messageClass = 'message ';
+        messageClass += isOwner ? 'own-message' : 'received-message';
+        const displayName = isOwner ? 'You' : username;
+
+        let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">';
+        conversation.append(
+                `<div class="${messageClass}">
+                    <div>${image}<span>${displayName}</span></div> <p>${data}</p>
+                </div>`);
+        conversation.scrollTop(conversation.prop('scrollHeight'));
+    });
+
+    socket.on(idreadmessages, function (array) {
+        const conversation = $('#conversation');
+        conversation.empty();
+        const owner = conversation.attr('data-owner');
+
+        array.forEach((message) => {
+            console.log(message);
+            const isOwner = owner === message.usernamechat;
+            let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">';
+            let messageClass = 'message ';
+            messageClass += isOwner ? 'own-message' : 'received-message';
+            const username = isOwner ? 'You' : message.usernamechat;
+            conversation.append(
+                    `<div class="${messageClass}">
+                    <div>${image}<span>${username}</span></div> <p>${message.message}</p>
+                </div>`
+            );
+            conversation.scrollTop(conversation.prop('scrollHeight'));
+        });
+    });
+
+
+    function switchRoom(room) {
+        $('.name').fadeIn(300);
+        console.log($('.name'));
+        let actualroom;
+        arrayMyRooms.map((x) => {
+            if (x.chatId === room) {
+                actualroom = x.name;
+                socket.emit('switchRoom', [room, actualroom]);
+            }
+        })
+    }
+
+    // on load of page
+    $(function () {
+        // when the client clicks SEND
+        $('#datasend').click(function () {
+            var msge = $('#data').val();
+            $('#data').val('');
+            // tell server to execute 'sendchat' and send along one parameter
+            msge.length && socket.emit('sendchat', [msge, "{{ response.pictureOfUser }}"]);
+        });
+
+        // when the client hits ENTER on their keyboard
+        $('#data').keypress(function (e) {
+            if (e.which === 13) {
+                $(this).blur();
+                $('#datasend').focus().click();
+            }
+        });
+        $('#close').click(() => {
+            $('.name').fadeOut(300);
+        });
+    });
+
+
+</script>
+<div class="rooms">
+    <a class="wall-back" href="/private/wall"><i class="fas fa-chevron-left"></i></a>
+    <h1>Lobby</h1>
+    <div class="point-users">
+        <div class="available"></div>
+        <h2>Users available:</h2>
+    </div>
+    <div id="rooms"></div>
+</div>
+
+<div class="name">
+    <i id="close" class="fas fa-times"></i>
+    <div id="conversation" data-owner="{{user.username}}"></div>
+    <div class="send-message">
+        <input class="input" id="data"/>
+        <input class="send" type="button" id="datasend" value="send"/>
+    </div>
+</div>

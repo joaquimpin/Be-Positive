@@ -1,13 +1,18 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const recordSchema = new Schema({
-    text: String,
-    rate: Number,
-    date: Date,
-    owner: { type: Schema.Types.ObjectId, ref: "user" }
-});
+	text: { type: String, required: true },
+	rate: Number,
+	like: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+	owner: { type: Schema.Types.ObjectId, ref: 'User' },
+	public: { type: Boolean, default: true }
+},
+	{
+		timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }
+	}
+);
 
-const record = mongoose.model("record", recordSchema);
+const Record = mongoose.model('Record', recordSchema);
 
-module.exports = record;
+module.exports = Record;

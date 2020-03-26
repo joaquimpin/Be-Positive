@@ -1,0 +1,28 @@
+{{#if errorMessage}}
+    <p class="error-message">
+        {{ errorMessage }}
+    </p>
+        {{/if}}
+<div class="signup-section">
+    <a class="close" href="/"><i class="fas fa-times"></i></a>
+    <form id="form" action="/auth/signup" method="post">
+        <input type="text" name="username" placeholder="Username"/><br>
+        <input type="text" name="name" placeholder="Name"/><br>
+        <input type="text" name="lastName" placeholder="Lastname"/><br>
+        <input type="email" name="email" placeholder="E-mail"/><br>
+        <input type="password" name="password" placeholder="Password"/><br>
+        <input type="password" name="repeatPassword" placeholder="Repeat Password"/><br>
+        <select name="country" style="width:100%;max-width:56%;">
+            <option disabled selected>Select a country</option>
+            {{#each countries}}
+                <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+        <select name="profession" style="width:100%;max-width:56%;">
+            {{#each profession}}
+                <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select><br>
+        <button class="create-button" type="submit">Create account</button>
+    </form>
+</div>

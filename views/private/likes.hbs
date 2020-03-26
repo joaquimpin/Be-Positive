@@ -1,0 +1,12 @@
+{{> navbarPartial }}
+
+<div class="see-likes">
+    <h1>Likes:</h1>
+
+    {{#each result}}
+        <div class="header">
+            <img src="/images/profileimages/{{ this.pictureOfUser }}" alt="avatar"/>
+            {{this.username}}
+        </div>
+    {{/each}}
+</div>

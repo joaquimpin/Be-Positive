@@ -1,0 +1,29 @@
+<section class="rate-comment">
+    <div>
+        <h1>How was your day?</h1>
+        <div class="faces">
+            <i onclick="rate(1)" class="fas fa-sad-cry" data-selected="true" id="1"></i>
+            <i onclick="rate(2)" class="fas fa-frown" data-selected="true" id="2"></i>
+            <i onclick="rate(3)" class="fas fa-meh" data-selected="true" id="3"></i>
+            <i onclick="rate(4)" class="fas fa-smile" data-selected="true" id="4"></i>
+            <i onclick="rate(5)" class="fas fa-laugh-beam" data-selected="true" id="5"></i>
+        </div>
+    </div>
+    <form action="/private/add-comment" method="post">
+        <input type="number" name="rating" id="rating" />
+        <div>
+            <h2>Write your positive achievement</h2>
+            <textarea class="text-input" type="text" name="text"></textarea>
+        </div>
+        <label class="checkbox">Uncheck for private
+            <input class="check" type="checkbox" value="public" name="public" checked id="private">
+            <span class="checkmark"></span>
+        </label>
+        <button type="submit">Share</button>
+        <a href="./wall" class="cancel-button">Cancel</a>
+    </form>
+</section>
+
+{{#if errorMessage}}
+<div class="error-message">{{ errorMessage }}</div>
+{{/if}}
