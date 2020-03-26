@@ -48,7 +48,7 @@ io.sockets.on('connection', function (socket) {
   // when the client emits 'adduser', this listens and executes
   socket.on('adduser', function (id) {
     User.findById(id).then((resp) => {
-      let username = resp.username
+      let username = resp.username;
       // store the username in the socket session for this client
       socket.username = username;
       // store the room name in the socket session for this client
@@ -75,9 +75,9 @@ io.sockets.on('connection', function (socket) {
   // when the client emits 'sendchat', this listens and executes
   socket.on('sendchat', function (data) {
     //console.log(socket.room, socket.username, data[0])
-    let urlimages = "/images/profileimages/" 
+    let urlimages = "/images/profileimages/" ;
     User.findOne({ username: socket.username }).then((resp) => {
-      Chat.create({ chatId: socket.room, usernamechat: socket.username, message: data[0], userId: resp._id })
+      Chat.create({ chatId: socket.room, usernamechat: socket.username, message: data[0], userId: resp._id });
       // we tell the client to execute 'updatechat' with 2 parameters
       io.sockets.in(socket.room).emit('updatechat', socket.username, data[0], data[1]);
     }
@@ -115,7 +115,7 @@ io.sockets.on('connection', function (socket) {
           //console.log("updatechat messages-->", y.chatId, y.usernamechat, y.message)
         })
         // socket.broadcast.to(newroom).emit('updatechat', socket.username, data)
-      })
+      });
 
     socket.emit('updaterooms', rooms, newroom);
   });

@@ -1,0 +1,79 @@
+.rooms {
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+  overflow: -moz-scrollbars-vertical;
+
+  .point-users {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 42px;
+    text-decoration: underline;
+    margin-bottom: 3rem;
+    margin-left: 50%;
+  }
+
+  .available {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: #4CAF50;
+    margin-right: 5px;
+    box-shadow: 0 0 14px 1px #4CAF50;
+    margin-left: 0.5rem;
+  }
+
+  h2 {
+    font-size: 14px;
+    color: #4CAF50;
+  }
+}
+
+.name {
+  float: left;
+  width: 300px;
+  height: 250px;
+  overflow: -moz-scrollbars-vertical;
+  padding: 10px;
+}
+
+#data {
+  width: 200px;
+  margin-bottom: 1.5rem;
+}
+
+#conversation {
+  img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+  }
+}
+
+.name {
+  display: none;
+}
+
+.test2 {
+  display: block;
+}
+
+#rooms {
+  div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 0.5rem;
+  }
+  .avatar {
+    margin-right: 0.5rem;
+  }
+}
