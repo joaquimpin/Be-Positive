@@ -44,6 +44,7 @@
   top: 0;
   background: linear-gradient(132deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
 
+
   .fa-times {
     position: absolute;
     top: 20px;
@@ -104,10 +105,12 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 8px;
+
       span {
         font-family: HKGrotesk-Bold;
       }
     }
+
     & > p {
       background: floralwhite;
       padding: 5px;
@@ -119,9 +122,11 @@
     align-items: flex-end;
     align-self: flex-end;
     text-align: right;
+
     & > div {
       flex-direction: row-reverse;
     }
+
     img {
       margin-left: 0.5rem;
     }
@@ -144,12 +149,6 @@
   }
 }
 
-.name {
-}
-
-.chat-in {
-  display: block;
-}
 
 #rooms {
   div {
