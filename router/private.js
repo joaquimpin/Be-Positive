@@ -11,6 +11,7 @@ const path = require('path');
 const routeAvatarPictures = '../images/profileimages/';
 const multer = require('multer');
 const mongoose = require('mongoose');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 
 const storage = multer.diskStorage({
@@ -227,10 +228,26 @@ router.get('/delete', (req, res) => {
 
 router.post('/confirmdelete', async (req, res, next) => {
 	if (req.body.username === req.session.currentUser.username) {
+		//console.log(req.session.currentUser._id)
+		let test
+		let chat = await User.find({ "chat.user": ObjectId(req.session.currentUser._id) })
+		for (let i = 0; i < chat.length; i++) {
+			const object = chat[i];
+			for (let j = 0; j < object.chat.length; j++) {
+				const arrayChat = object.chat[j];
+				console.log(arrayChat.user, req.session.currentUser._id)
+				if (arrayChat.user == req.session.currentUser._id) {
+
+					chat[i].chat.splice(j, 1)
+				}
+			}
+			test = await User.findByIdAndUpdate(chat[i]._id, object)
+
+		};
 		let records = await Record.deleteMany({ owner: req.session.currentUser._id });
 		let user = await User.deleteOne({ _id: req.session.currentUser._id });
 		req.session.destroy();
-		console.log(records, user);
+		console.log(records, user, test);
 		res.render('private/deleted');
 
 
