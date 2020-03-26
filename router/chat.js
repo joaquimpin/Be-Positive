@@ -16,8 +16,6 @@ router.get('/', async (req, res) => {
     return Promise.all(response.chat.map(item => anAsyncFunction(item)))
   };
   getData().then(data => {
-    console.log(data);
-
     let chat = JSON.stringify(data);
     res.render('chat/chat', { response, chat, user: req.session.currentUser })
   })
@@ -33,7 +31,7 @@ router.get('/', async (req, res) => {
 
 
   // res.sendFile(path.join(__dirname, "../public/html/index.html"))
-})
+});
 
 
 module.exports = router;

@@ -43,8 +43,9 @@
         let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">';
         conversation.append(
                 `<div class="${messageClass}">
-                    <div>${image}<span>${displayName}</span></div> <p>${message.message}</p>
-                </div>`)
+                    <div>${image}<span>${displayName}</span></div> <p>${data}</p>
+                </div>`);
+        conversation.scrollTop(conversation.prop('scrollHeight'));
     });
 
     socket.on(idreadmessages, function (array) {
@@ -53,23 +54,25 @@
         const owner = conversation.attr('data-owner');
 
         array.forEach((message) => {
-        	const isOwner = owner === message.usernamechat;
+            console.log(message);
+            const isOwner = owner === message.usernamechat;
             let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">';
             let messageClass = 'message ';
             messageClass += isOwner ? 'own-message' : 'received-message';
-            const displayName = isOwner ? 'You' : message.usernamechat;
+            const username = isOwner ? 'You' : message.usernamechat;
             conversation.append(
-            	`<div class="${messageClass}">
-                    <div>${image}<span>${displayName}</span></div> <p>${message.message}</p>
+                    `<div class="${messageClass}">
+                    <div>${image}<span>${username}</span></div> <p>${message.message}</p>
                 </div>`
             );
+            conversation.scrollTop(conversation.prop('scrollHeight'));
         });
     });
 
 
-
     function switchRoom(room) {
-        $('.name').addClass('chat-in');
+        $('.name').fadeIn(300);
+        console.log($('.name'));
         let actualroom;
         arrayMyRooms.map((x) => {
             if (x.chatId === room) {
@@ -97,9 +100,8 @@
             }
         });
         $('#close').click(() => {
-            $('.name').removeClass('chat-in');
-        })
-
+            $('.name').fadeOut(300);
+        });
     });
 
 
