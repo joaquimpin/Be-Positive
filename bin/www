@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var express = require("express")
+var express = require("express");
 const http = require('http');
 let app = require('../app');
 const Chat = require('../models/chat');
@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
 });
 
 let server = http.createServer(app);
-const io = require('socket.io').listen(server)
+const io = require('socket.io').listen(server);
 
 
 server.listen(process.env.PORT, () => {
@@ -79,7 +79,7 @@ io.sockets.on('connection', function (socket) {
     User.findOne({ username: socket.username }).then((resp) => {
       Chat.create({ chatId: socket.room, usernamechat: socket.username, message: data[0], userId: resp._id });
       // we tell the client to execute 'updatechat' with 2 parameters
-      io.sockets.in(socket.room).emit('updatechat', socket.username, data[0], data[1]);
+      io.sockets.in(socket.room).emit('updatechat', socket.username, data[0], data[1], resp.username);
     }
     )
 
@@ -96,8 +96,8 @@ io.sockets.on('connection', function (socket) {
 
 
   socket.on('switchRoom', function async(array) {
-    let newroom = array[0]
-    let name = array[1]
+    let newroom = array[0];
+    let name = array[1];
     // leave the current room (stored in session)
     socket.leave(socket.room);
     // join new room, received as function parameter
@@ -123,7 +123,7 @@ io.sockets.on('connection', function (socket) {
   // when the user disconnects.. perform this
   socket.on('disconnect', function () {
     // remove the username from global usernames list
-    rooms.splice(rooms.indexOf(socket.username), 1)
+    rooms.splice(rooms.indexOf(socket.username), 1);
     delete usernames[socket.username];
     // update list of users in chat, client-side
     io.sockets.emit('updateusers', usernames);
