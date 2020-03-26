@@ -12,16 +12,6 @@
 
     });
 
-    // listener, whenever the server emits 'updatechat', this updates the chat body
-    socket.on('updatechat', function (username, data, pictureOfUser) {
-        let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">';
-        $('#conversation').append(
-        `<div class="message">
-                    ${image}<div><b>${message.usernamechat}</b> ${message.message}
-                </div>`)
-    });
-
-
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
     socket.on('updaterooms', function (rooms, current_room) {
         $('#rooms').empty();
@@ -40,21 +30,40 @@
         $('#conversation').empty();
         socket.emit('readmessages', [current_room, idreadmessages])
     });
+
+    // listener, whenever the server emits 'updatechat', this updates the chat body
+    socket.on('updatechat', function (username, data, pictureOfUser) {
+        const conversation = $('#conversation');
+        const owner = conversation.attr('data-owner');
+        const isOwner = owner === username;
+        let messageClass = 'message ';
+        messageClass += isOwner ? 'own-message' : 'received-message';
+        const displayName = isOwner ? 'You' : username;
+
+        let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">';
+        conversation.append(
+                `<div class="${messageClass}">
+                    <div>${image}<span>${displayName}</span></div> <p>${message.message}</p>
+                </div>`)
+    });
+
     socket.on(idreadmessages, function (array) {
-        $('#conversation').empty();
+        const conversation = $('#conversation');
+        conversation.empty();
+        const owner = conversation.attr('data-owner');
 
         array.forEach((message) => {
+        	const isOwner = owner === message.usernamechat;
             let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">';
-
-            $('#conversation').append(
-            	`<div class="message">
-                    ${image}<div><b>${message.usernamechat}</b> ${message.message}
+            let messageClass = 'message ';
+            messageClass += isOwner ? 'own-message' : 'received-message';
+            const displayName = isOwner ? 'You' : message.usernamechat;
+            conversation.append(
+            	`<div class="${messageClass}">
+                    <div>${image}<span>${displayName}</span></div> <p>${message.message}</p>
                 </div>`
-
             );
-
-        })
-
+        });
     });
 
 
@@ -77,7 +86,7 @@
             var msge = $('#data').val();
             $('#data').val('');
             // tell server to execute 'sendchat' and send along one parameter
-            socket.emit('sendchat', [msge, "{{ response.pictureOfUser }}"]);
+            msge.length && socket.emit('sendchat', [msge, "{{ response.pictureOfUser }}"]);
         });
 
         // when the client hits ENTER on their keyboard
@@ -107,7 +116,7 @@
 
 <div class="name">
     <i id="close" class="fas fa-times"></i>
-    <div id="conversation"></div>
+    <div id="conversation" data-owner="{{user.username}}"></div>
     <div class="send-message">
         <input class="input" id="data"/>
         <input class="send" type="button" id="datasend" value="send"/>

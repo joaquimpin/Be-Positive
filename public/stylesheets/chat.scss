@@ -86,18 +86,61 @@
   overflow: auto;
   max-height: 84%;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 0 12px;
+
   .message {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    width: 50%;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8px;
+      span {
+        font-family: HKGrotesk-Bold;
+      }
+    }
+    & > p {
+      background: floralwhite;
+      padding: 5px;
+      border-radius: 10px;
+    }
+  }
+
+  .own-message {
+    align-items: flex-end;
+    align-self: flex-end;
+    text-align: right;
+    & > div {
+      flex-direction: row-reverse;
+    }
+    img {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .received-message {
+    align-items: flex-start;
+    align-self: flex-start;
+    text-align: left;
+
+    img {
+      margin-right: 0.5rem;
+    }
   }
 
   img {
-    width: 42px;
-    height: 42px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    margin-right: 0.5rem;
   }
 }
 
