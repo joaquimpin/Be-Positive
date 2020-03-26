@@ -15,7 +15,10 @@
     // listener, whenever the server emits 'updatechat', this updates the chat body
     socket.on('updatechat', function (username, data, pictureOfUser) {
         let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">';
-        $('#conversation').append(image + '<b>' + username + ':</b> ' + data + '<br>');
+        $('#conversation').append(
+        `<div class="message">
+                    ${image}<div><b>${message.usernamechat}</b> ${message.message}
+                </div>`)
     });
 
 
@@ -53,6 +56,7 @@
         })
 
     });
+
 
 
     function switchRoom(room) {
