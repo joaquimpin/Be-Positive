@@ -1,8 +1,9 @@
 {{> navbarPartial }}
 <div class="data">
     <div class="title">
-        <div class="avatar avatar-profile" style="background-image: url('/images/profileimages/{{user.pictureOfUser}}')"></div><br>
-        <a class="edit-pencil" href="/private/edit"><i class="fas fa-user-edit"></i></a>
+        <div class="avatar avatar-profile"
+            style="background-image: url('/images/profileimages/{{user.pictureOfUser}}')"></div><br>
+        {{#if edit}}<a class="edit-pencil" href="/private/edit"><i class="fas fa-user-edit"></i></a>{{/if}}
 
     </div>
     <div class="profile-info">
@@ -15,25 +16,26 @@
         <p><span>Country: </span>{{user.country}} </p>
     </div>
     {{#each record}}
-        <div class="record">
-            <div class="header">
-                <div class="avatar" style="background-image: url('/images/profileimages/{{this.owner.pictureOfUser}}')"></div>
-                <div class="username">{{ this.owner.username }}</div>
-                {{#unless this.public}}
-                    <i class="fas fa-lock lock"></i>
-                {{/unless}}
+    <div class="record">
+        <div class="header">
+            <div class="avatar" style="background-image: url('/images/profileimages/{{this.owner.pictureOfUser}}')">
             </div>
-            <p class="content">{{this.text}}</p>
-            <div class="footer">
-                <div>{{ formatDate this.createdAt  day="numeric" month="long" year="numeric" }}</div>
-                <div>
-                    <a href="/private/likes/{{this._id}}">{{ this.like.length }}</a>
-                    <button onclick="addLike('{{ this._id }}')"></button>
-                    <i class="far fa-thumbs-up"></i>
-                </div>
-                <!--                <i class="fas fa-thumbs-up"></i>-->
-            </div>
+            <div class="username">{{ this.owner.username }}</div>
+            {{#unless this.public}}
+            <i class="fas fa-lock lock"></i>
+            {{/unless}}
         </div>
+        <p class="content">{{this.text}}</p>
+        <div class="footer">
+            <div>{{ formatDate this.createdAt  day="numeric" month="long" year="numeric" }}</div>
+            <div>
+                <a href="/private/likes/{{this._id}}">{{ this.like.length }}</a>
+                <button onclick="addLike('{{ this._id }}')"></button>
+                <i class="far fa-thumbs-up"></i>
+            </div>
+            <!--                <i class="fas fa-thumbs-up"></i>-->
+        </div>
+    </div>
     {{/each}}
 </div>
 

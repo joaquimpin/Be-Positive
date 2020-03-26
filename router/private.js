@@ -44,9 +44,18 @@ router.get('/wall', (req, res) => {
 router.get('/profile', async (req, res) => {
 	let user = await User.findById(req.session.currentUser._id);
 	let record = await Record.find({ owner: req.session.currentUser._id }).populate('owner').sort({ createdAt: -1 });
-	res.render('private/profile', { user, record, wall: true, logout: true });
+	res.render('private/profile', { user, record, wall: true, logout: true, edit: true });
 });
 
+router.get('/profile/:id', async (req, res) => {
+	if (req.params.id === req.session.currentUser._id) {
+		res.redirect('/private/profile');
+	} else {
+		let user = await User.findById(req.params.id);
+		let record = await Record.find({ owner: user._id, public: true }).populate('owner').sort({ createdAt: -1 });
+		res.render('private/profile', { user, record, wall: true, logout: true, edit: false });
+	}
+});
 
 router.get('/add-comment', (req, res) => {
 	res.render('private/add-comment');
