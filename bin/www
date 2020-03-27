@@ -87,8 +87,8 @@ io.sockets.on('connection', function (socket) {
       io.sockets.in(socket.room).emit('updatechat', socket.username, data[0], data[1], resp.username);
       User.find({ _id: { $nin: resp._id }, "chat.chatId": String(socket.room) })
         .then((respuesta) => {
-          console.log(String(socket.room))
-          console.log(respuesta)
+          console.log(String(socket.room));
+          console.log(respuesta);
           io.sockets.emit(String(respuesta[0]._id), [socket.username, data[0]]);
 
         })

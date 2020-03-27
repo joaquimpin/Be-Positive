@@ -13,13 +13,13 @@
 
     });
     socket.on("{{id}}", (data) => {
-        console.log(actualroom, data[0])
-        if (actualroom >= data[0]) {
-            let mensaje = data[0] + ": " + data[1]
+        console.log(actualroom, data[0]);
+        if (actualroom !== data[0]) {
+            let mensaje = data[0] + ": " + data[1];
             mensajeError(window, document, jQuery, "success", mensaje);
 
         }
-    })
+    });
 
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
     socket.on('updaterooms', function (rooms, current_room) {
@@ -82,7 +82,8 @@
         $('.name').fadeIn(300);
         arrayMyRooms.map((x) => {
             if (x.chatId === room) {
-                actualroom = x.name;
+            	console.log(x);
+                actualroom = x.username;
                 socket.emit('switchRoom', [room, actualroom]);
             }
         })
@@ -106,6 +107,7 @@
             }
         });
         $('#close').click(() => {
+        	actualroom = null;
             $('.name').fadeOut(300);
         });
     });
