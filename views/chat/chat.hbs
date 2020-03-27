@@ -4,12 +4,20 @@
     var socket = io.connect(window.location.host);
     let idreadmessages = String(Math.floor(Math.random() * 100000000000)) //"token session xapu... para recepcion de mensajes del servidor (recuperacion de datos de xats no leidos"
     let urlImages = '/images/profileimages/' //ruta de imagen
+    let actualroom;
     let arrayMyRooms = JSON.parse(("{{ chat }}").split('&quot;').join('"')) //array de xats disponibles para un usuario.
     // on connection to server, ask for user's name with an anonymous callback
     socket.on('connect', function () {
         // call the server-side function 'adduser' and send one parameter (value of prompt)
         socket.emit('adduser', "{{ response._id }}");
 
+    });
+    socket.on("{{id}}", (data) => {
+        if (actualroom !== data[0]) {
+            let mensaje = data[0] + ": " + data[1];
+            mensajeError(window, document, jQuery, "success", mensaje);
+
+        }
     });
 
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
@@ -19,13 +27,12 @@
             arrayMyRooms.map((room) => {
                 if (room.chatId === value) {
                     $('#rooms').append('' +
-                            '<div>' +
-                            `<div class="avatar" style="background-image: url('/images/profileimages/${room.photo}')"></div>` +
-                            '<a href="#" onclick="switchRoom(\'' + value + '\')">' + room.username + '</a>' +
-                            '</div>');
+                        '<div>' +
+                        `<div class="avatar" style="background-image: url('/images/profileimages/${room.photo}')"></div>` +
+                        '<a href="#" onclick="switchRoom(\'' + value + '\')">' + room.username + '</a>' +
+                        '</div>');
                 }
             })
-
         });
         $('#conversation').empty();
         socket.emit('readmessages', [current_room, idreadmessages])
@@ -42,7 +49,7 @@
 
         let image = '<img src="' + urlImages + pictureOfUser + '" alt="Smiley face">';
         conversation.append(
-                `<div class="${messageClass}">
+            `<div class="${messageClass}">
                     <div>${image}<span>${displayName}</span></div> <p>${data}</p>
                 </div>`);
         conversation.scrollTop(conversation.prop('scrollHeight'));
@@ -54,14 +61,13 @@
         const owner = conversation.attr('data-owner');
 
         array.forEach((message) => {
-            console.log(message);
             const isOwner = owner === message.userId.username;
             let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">';
             let messageClass = 'message ';
             messageClass += isOwner ? 'own-message' : 'received-message';
             const username = isOwner ? 'You' : message.userId.username;
             conversation.append(
-                    `<div class="${messageClass}">
+                `<div class="${messageClass}">
                     <div>${image}<span>${username}</span></div> <p>${message.message}</p>
                 </div>`
             );
@@ -72,10 +78,9 @@
 
     function switchRoom(room) {
         $('.name').fadeIn(300);
-        let actualroom;
         arrayMyRooms.map((x) => {
             if (x.chatId === room) {
-                actualroom = x.name;
+                actualroom = x.username;
                 socket.emit('switchRoom', [room, actualroom]);
             }
         })
@@ -99,6 +104,7 @@
             }
         });
         $('#close').click(() => {
+            actualroom = null;
             $('.name').fadeOut(300);
         });
     });
@@ -119,7 +125,7 @@
     <i id="close" class="fas fa-times"></i>
     <div id="conversation" data-owner="{{user.username}}"></div>
     <div class="send-message">
-        <input class="input" id="data"/>
-        <input class="send" type="button" id="datasend" value="send"/>
+        <input class="input" id="data" />
+        <input class="send" type="button" id="datasend" value="send" />
     </div>
 </div>
