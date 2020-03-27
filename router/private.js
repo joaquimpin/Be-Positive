@@ -180,14 +180,12 @@ router.post('/edit', (req, res, next) => {
 			response.password = bcrypt.hashSync(password, salt);
 		} else {
 			if (password !== '') {
-				console.log('fallo al cambiar el password');
 				res.render('auth/edituser', response);
 			}
 		}
-		User.findByIdAndUpdate(req.session.currentUser._id, response)
+		User.findByIdAndUpdate(req.session.currentUser._id, response, {new: true})
 			.then((respuesta) => {
 				req.session.currentUser = respuesta;
-				console.log('User updated');
 				res.redirect('/private/edit')
 			})
 	})

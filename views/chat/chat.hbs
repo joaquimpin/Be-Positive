@@ -21,7 +21,7 @@
                     $('#rooms').append('' +
                             '<div>' +
                             `<div class="avatar" style="background-image: url('/images/profileimages/${room.photo}')"></div>` +
-                            '<a href="#" onclick="switchRoom(\'' + value + '\')">' + room.name + '</a>' +
+                            '<a href="#" onclick="switchRoom(\'' + value + '\')">' + room.username + '</a>' +
                             '</div>');
                 }
             })
@@ -55,11 +55,11 @@
 
         array.forEach((message) => {
             console.log(message);
-            const isOwner = owner === message.usernamechat;
+            const isOwner = owner === message.userId.username;
             let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">';
             let messageClass = 'message ';
             messageClass += isOwner ? 'own-message' : 'received-message';
-            const username = isOwner ? 'You' : message.usernamechat;
+            const username = isOwner ? 'You' : message.userId.username;
             conversation.append(
                     `<div class="${messageClass}">
                     <div>${image}<span>${username}</span></div> <p>${message.message}</p>
@@ -72,7 +72,6 @@
 
     function switchRoom(room) {
         $('.name').fadeIn(300);
-        console.log($('.name'));
         let actualroom;
         arrayMyRooms.map((x) => {
             if (x.chatId === room) {
