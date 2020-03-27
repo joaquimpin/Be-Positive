@@ -17,7 +17,8 @@ router.get('/', async (req, res) => {
   };
   getData().then(data => {
     let chat = JSON.stringify(data);
-    res.render('chat/chat', { response, chat, user: req.session.currentUser })
+    console.log("fasdfaj-->", req.session.currentUser._id)
+    res.render('chat/chat', { response, chat, user: req.session.currentUser, id: req.session.currentUser._id })
   })
 
 
