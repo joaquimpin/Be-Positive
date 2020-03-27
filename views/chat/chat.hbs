@@ -13,7 +13,6 @@
 
     });
     socket.on("{{id}}", (data) => {
-        console.log(actualroom, data[0]);
         if (actualroom !== data[0]) {
             let mensaje = data[0] + ": " + data[1];
             mensajeError(window, document, jQuery, "success", mensaje);
@@ -62,7 +61,6 @@
         const owner = conversation.attr('data-owner');
 
         array.forEach((message) => {
-            console.log(message);
             const isOwner = owner === message.userId.username;
             let image = '<img src="' + urlImages + message.userId.pictureOfUser + '" alt="Smiley face">';
             let messageClass = 'message ';
@@ -82,7 +80,6 @@
         $('.name').fadeIn(300);
         arrayMyRooms.map((x) => {
             if (x.chatId === room) {
-            	console.log(x);
                 actualroom = x.username;
                 socket.emit('switchRoom', [room, actualroom]);
             }
@@ -107,7 +104,7 @@
             }
         });
         $('#close').click(() => {
-        	actualroom = null;
+            actualroom = null;
             $('.name').fadeOut(300);
         });
     });
