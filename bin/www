@@ -89,7 +89,7 @@ io.sockets.on('connection', function (socket) {
         .then((respuesta) => {
           console.log(String(socket.room))
           console.log(respuesta)
-          io.sockets.emit(String(respuesta[0]._id), String(socket.username + ": " + data[0]));
+          io.sockets.emit(String(respuesta[0]._id), [socket.username, data[0]]);
 
         })
     })

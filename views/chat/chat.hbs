@@ -4,6 +4,7 @@
     var socket = io.connect(window.location.host);
     let idreadmessages = String(Math.floor(Math.random() * 100000000000)) //"token session xapu... para recepcion de mensajes del servidor (recuperacion de datos de xats no leidos"
     let urlImages = '/images/profileimages/' //ruta de imagen
+    let actualroom;
     let arrayMyRooms = JSON.parse(("{{ chat }}").split('&quot;').join('"')) //array de xats disponibles para un usuario.
     // on connection to server, ask for user's name with an anonymous callback
     socket.on('connect', function () {
@@ -12,7 +13,12 @@
 
     });
     socket.on("{{id}}", (data) => {
-        mensajeError(window, document, jQuery, "success", data);
+        console.log(actualroom, data[0])
+        if (actualroom >= data[0]) {
+            let mensaje = data[0] + ": " + data[1]
+            mensajeError(window, document, jQuery, "success", mensaje);
+
+        }
     })
 
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
@@ -28,7 +34,6 @@
                         '</div>');
                 }
             })
-
         });
         $('#conversation').empty();
         socket.emit('readmessages', [current_room, idreadmessages])
@@ -75,7 +80,6 @@
 
     function switchRoom(room) {
         $('.name').fadeIn(300);
-        let actualroom;
         arrayMyRooms.map((x) => {
             if (x.chatId === room) {
                 actualroom = x.name;
